@@ -15,7 +15,7 @@ namespace Broom_lib
         #region Constructor
         public Clean()
         {            
-            Console.Title = "BroomMFC";
+            Console.Title = "Broom";
             Console.ForegroundColor = ConsoleColor.DarkGreen;
 
             PathUsers = @"C:\Users\";
@@ -26,15 +26,24 @@ namespace Broom_lib
         #region Console
         public void PrintWelcome()
         {
+
+            StreamReader License = new StreamReader(@"LICENSE");
+
             Console.WriteLine("Программа очистки кеша");
             Console.WriteLine("© Starinin Andrey (An.St.), Март 2018");
-            Console.WriteLine("Version: 0.1");
+            Console.WriteLine("© Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2018");
+            Console.WriteLine("Version: 0.2");
             Console.WriteLine("Language: C#");
             Console.WriteLine("MIT License");
             Console.WriteLine();
-            Console.WriteLine("Изменения:");
-            Console.WriteLine("v0.1:   Создание скрипта");
+            Console.Write(License.ReadToEnd());
             Console.WriteLine();
+            Console.WriteLine("Изменения:");
+            Console.WriteLine("v0.2 (Март 2019):   Добавление в выод информации о лицензии");
+            Console.WriteLine("v0.1 (Март 2018):   Создание скрипта");
+            Console.WriteLine();
+
+            License.Close();
         }
         public void PrintSwith()
         {
