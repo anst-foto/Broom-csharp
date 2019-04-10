@@ -48,9 +48,9 @@ namespace Broom
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
             Console.WriteLine("Изменения:");
-            Console.WriteLine("v0.3 (Март 2019):   Обработка исключений при удалении директорий, цветовое оформление");
-            Console.WriteLine("v0.2 (Март 2019):   Добавление в выод информации о лицензии");
-            Console.WriteLine("v0.1 (Март 2018):   Создание скрипта");
+            Console.WriteLine("v0.3 (Апрель 2019):   Обработка исключений при удалении директорий, цветовое оформление");
+            Console.WriteLine("v0.2 (Апрель 2019):   Добавление в выод информации о лицензии");
+            Console.WriteLine("v0.1 (Март 2018):   Создание программы");
             Console.WriteLine();
 
             License.Close();
