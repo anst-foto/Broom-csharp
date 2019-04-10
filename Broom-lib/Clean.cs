@@ -14,7 +14,7 @@ namespace Broom_lib
 
         #region Constructor
         public Clean()
-        {            
+        {
             Console.Title = "Broom";
             Console.ForegroundColor = ConsoleColor.DarkGreen;
 
@@ -27,18 +27,44 @@ namespace Broom_lib
         public void PrintWelcome()
         {
 
-            StreamReader License = new StreamReader(@"LICENSE");
+            StreamReader License = new StreamReader(@"D:\Programming\Broom\C#\LICENSE");
 
-            Console.WriteLine("Программа очистки кеша");
-            Console.WriteLine("© Starinin Andrey (An.St.), Март 2018");
-            Console.WriteLine("© Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2018");
-            Console.WriteLine("Version: 0.2");
-            Console.WriteLine("Language: C#");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("*******************************************************");
+            Console.WriteLine("Broom (Метла)");
+            Console.WriteLine("Очистка кэша и Корзины, удаление временных файлов");
+            Console.WriteLine();
+            Console.WriteLine("(c) Starinin Andrey (An.St.), Март 2018");
+            Console.WriteLine("(c) Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2018");
+            Console.WriteLine();
+            Console.WriteLine("Version: 0.3");
             Console.WriteLine("MIT License");
+            Console.WriteLine("Language: C#");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("***");
+            Console.WriteLine("GitHub - https://github.com/anst-foto/Broom-csharp");
+            Console.WriteLine();
+            Console.WriteLine("***");
+            Console.WriteLine("Основано на коде  - https://github.com/anst-foto/Broom");
+            Console.WriteLine("(c) Starinin Andrey (AnSt). 2017");
+            Console.WriteLine("(c) Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2017");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("*******************************************************");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("*******************************************************");
             Console.WriteLine();
             Console.Write(License.ReadToEnd());
             Console.WriteLine();
+            Console.WriteLine("*******************************************************");
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine();
             Console.WriteLine("Изменения:");
+            Console.WriteLine("v0.3 (Март 2019):   Обработка исключений при удалении директорий, цветовое оформление");
             Console.WriteLine("v0.2 (Март 2019):   Добавление в выод информации о лицензии");
             Console.WriteLine("v0.1 (Март 2018):   Создание скрипта");
             Console.WriteLine();
@@ -47,227 +73,131 @@ namespace Broom_lib
         }
         public void PrintSwith()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("***********************");
             Console.WriteLine("Закройте все браузеры!");
+            Console.WriteLine("***********************");
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
             Console.WriteLine("Выберите режим очистки:");
             Console.WriteLine("1. Очистить только кэши браузеров");
             Console.WriteLine("2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)");
-            Console.WriteLine("3. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)");
-            Console.WriteLine("4. Выход");
+            Console.WriteLine("3. Очитстить только папку Загрузки (Downloads)");
+            Console.WriteLine("4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)");
+            Console.WriteLine("5. Выход");
             Console.WriteLine();
         }
         #endregion
 
-        #region Clear Browser
-        private void Clear_Chrome(string dir)
+        #region Delete Folder & File
+        static void DeleteFolder(string directory)
         {
-            string dir1 = $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache";
-            string dir2 = $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache2\entries";
-            string dir3 = $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies";
-            string dir4 = $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Media Cache";
-            string dir5 = $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal";
-            string dir6 = $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache";
-
             try
             {
-                if (Directory.Exists(path: dir1))
-                {
-                    Directory.Delete(path: dir1, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir2))
-                {
-                    Directory.Delete(path: dir2, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir3))
-                {
-                    Directory.Delete(path: dir3, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir4))
-                {
-                    Directory.Delete(path: dir4, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir5))
-                {
-                    Directory.Delete(path: dir5, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir6))
-                {
-                    Directory.Delete(path: dir6, recursive: true);
-                }
+                Directory.Delete(path: $@"{directory}", recursive: true);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
+                Console.WriteLine("***********************");
+                Console.WriteLine("Директория не найдена! Ошибка: " + ex.Message);
+                Console.WriteLine("***********************");
+                Console.WriteLine();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
+                Console.WriteLine("***********************");
+                Console.WriteLine("Отсутствует доступ! Ошибка: " + ex.Message);
+                Console.WriteLine("***********************");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
+                Console.WriteLine("***********************");
                 Console.WriteLine("Ошибка: " + ex.Message);
+                Console.WriteLine("***********************");
+                Console.WriteLine();
             }
+        }
+        #endregion
+
+        #region Clear Browser
+        static void Clear_Mozilla(string dir)
+        {
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\OfflineCache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails");
+        }
+        static void Clear_Chrome(string dir)
+        {
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache2\entries");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Media Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache");
         }
         static void Clear_Chromium(string dir)
         {
-            string dir1 = $@"{dir}\AppData\Local\Chromium\User Data\Default\Cache";
-            string dir2 = $@"{dir}\AppData\Local\Chromium\User Data\Default\GPUCache";
-            string dir3 = $@"{dir}\AppData\Local\Chromium\User Data\Default\Media Cache";
-            string dir4 = $@"{dir}\AppData\Local\Chromium\User Data\Default\Pepper Data";
-            string dir5 = $@"{dir}\AppData\Local\Chromium\User Data\Default\Application Cache";
 
-            try
-            {
-                if (Directory.Exists(path: dir1))
-                {
-                    Directory.Delete(path: dir1, recursive: true);
-                }
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Chromium\User Data\Default\Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Chromium\User Data\Default\GPUCache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Chromium\User Data\Default\Media Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Chromium\User Data\Default\Pepper Data");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Chromium\User Data\Default\Application Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
 
-                if (Directory.Exists(path: dir2))
-                {
-                    Directory.Delete(path: dir2, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir3))
-                {
-                    Directory.Delete(path: dir3, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir4))
-                {
-                    Directory.Delete(path: dir4, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir5))
-                {
-                    Directory.Delete(path: dir5, recursive: true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка: " + ex.Message);
-            }
         }
         static void Clear_Yandex(string dir)
         {
-            string dir1 = $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cache";
-            string dir2 = $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\GPUCache";
-            string dir3 = $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Media Cache";
-            string dir4 = $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Pepper Data";
-            string dir5 = $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Application Cache";
-            string dir6 = $@"{dir}\AppData\Local\Yandex\YandexBrowser\Temp";
-
-            try
-            {
-                if (Directory.Exists(path: dir1))
-                {
-                    Directory.Delete(path: dir1, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir2))
-                {
-                    Directory.Delete(path: dir2, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir3))
-                {
-                    Directory.Delete(path: dir3, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir4))
-                {
-                    Directory.Delete(path: dir4, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir5))
-                {
-                    Directory.Delete(path: dir5, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir6))
-                {
-                    Directory.Delete(path: dir6, recursive: true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка: " + ex.Message);
-            }
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\GPUCache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Media Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Pepper Data");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Application Cache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\Temp");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies-Journal");
         }
         static void Clear_IE(string dir)
         {
-            string dir1 = $@"{dir}\AppData\Local\Microsoft\Windows\Temporary Internet Files";
-            string dir2 = $@"{dir}\AppData\Local\Microsoft\Windows\WER";
-            string dir3 = $@"{dir}\AppData\Local\Microsoft\Windows\INetCache";
-            string dir4 = $@"{dir}\AppData\Local\Microsoft\Windows\WebCache";
-
-            try
-            {
-                if (Directory.Exists(path: dir1))
-                {
-                    Directory.Delete(path: dir1, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir2))
-                {
-                    Directory.Delete(path: dir2, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir3))
-                {
-                    Directory.Delete(path: dir3, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir4))
-                {
-                    Directory.Delete(path: dir4, recursive: true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка: " + ex.Message);
-            }
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\Temporary Internet Files");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\WER");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\INetCache");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\WebCache");
+        }
+        static void Clear_Opera(string dir)
+        {
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Opera Software\Opera Stable\Cache");
         }
         #endregion
 
         #region Clear RecileBin & Temp
         public void Clear_Temp(string dir)
         {
-            string dir1 = $@"{dir}\AppData\Local\Temp";
-            string dir2 = $@"{dir}\AppData\Local\Microsoft\Windows\AppCache";
-
-            try
-            {
-                if (Directory.Exists(path: dir1))
-                {
-                    Directory.Delete(path: dir1, recursive: true);
-                }
-
-                if (Directory.Exists(path: dir2))
-                {
-                    Directory.Delete(path: dir2, recursive: true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка: " + ex.Message);
-            }
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Temp");
+            DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\AppCache");
+            DeleteFolder(directory: TempPath);
         }
         public void Clear_RecileBin()
         {
-            try
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in drives)
             {
-                DriveInfo[] drives = DriveInfo.GetDrives();
-                foreach (DriveInfo drive in drives)
-                {
-                    string RecyclePath = $@"{drive}$Recycle.Bin";
-                    if (Directory.Exists(RecyclePath))
-                    {
-                        Directory.Delete(path: RecyclePath, recursive: true);
-                    }
-                }
+                string RecyclePath = $@"{drive}$Recycle.Bin";
+                DeleteFolder(directory: RecyclePath);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка: " + ex.Message);
-            }
+        }
+        public void Clear_Download(string dir)
+        {
+            DeleteFolder(directory: $@"{dir}\Downloads");
         }
         #endregion
 
@@ -277,6 +207,8 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка кэша Google Chrome...");
+                Console.WriteLine();
                 foreach (string s in PathUser)
                 {
                     Clear_Temp(dir: s);
@@ -290,6 +222,8 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка кэша Chromium...");
+                Console.WriteLine();
                 foreach (string s in PathUser)
                 {
                     Clear_Chromium(dir: s);
@@ -302,6 +236,8 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка кэша Яндекс.Браузер...");
+                Console.WriteLine();
                 foreach (string s in PathUser)
                 {
                     Clear_Yandex(dir: s);
@@ -314,6 +250,8 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка кэша Internet Explorer...");
+                Console.WriteLine();
                 foreach (string s in PathUser)
                 {
                     Clear_IE(dir: s);
@@ -321,31 +259,69 @@ namespace Broom_lib
                 Console.WriteLine("Очистка кэша Internet Explorer завершена");
             }
         }
+        public void CleannerMozilla()
+        {
+            if (Directory.Exists(path: PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка кэша Mozilla...");
+                Console.WriteLine();
+                foreach (string s in PathUser)
+                {
+                    Clear_Mozilla(dir: s);
+                }
+                Console.WriteLine("Очистка кэша Mozilla завершена");
+            }
+        }
+        public void CleannerOpera()
+        {
+            if (Directory.Exists(path: PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка кэша Opera...");
+                Console.WriteLine();
+                foreach (string s in PathUser)
+                {
+                    Clear_Opera(dir: s);
+                }
+                Console.WriteLine("Очистка кэша Opera завершена");
+            }
+        }
         #endregion
 
         #region Cleaner RecileBin & Temp
         public void CleanerRecileBinTemp()
         {
+            Console.WriteLine("Очистка Корзины...");
+            Console.WriteLine();
             Clear_RecileBin();
+            Console.WriteLine("Очистка Корзины завершена");
 
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Удаление временных файлов...");
+                Console.WriteLine();
                 foreach (string s in PathUser)
                 {
                     Clear_Temp(dir: s);
-                }                
+                }
+                Console.WriteLine("Удаление временных файлов завершено");
             }
-            try
+        }
+        public void CleannerDownload()
+        {
+            if (Directory.Exists(path: PathUsers))
             {
-                Directory.Delete(path: TempPath, recursive: true);
+                string[] PathUser = Directory.GetDirectories(path: PathUsers);
+                Console.WriteLine("Очистка папки Загрузка...");
+                Console.WriteLine();
+                foreach (string s in PathUser)
+                {
+                    Clear_Download(dir: s);
+                }
+                Console.WriteLine("Очистка папки Загрузка завершена");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Ошибка: " + ex.Message);
-            }
-            
-            Console.WriteLine("Очистка Корзины и удаление временных файлов завершена");
         }
         #endregion
 
@@ -356,15 +332,22 @@ namespace Broom_lib
             CleanerChromium();
             CleanerYandex();
             CleanerIE();
+            CleannerMozilla();
+            CleannerOpera();
         }
         public void CleanerRecile()
         {
             CleanerRecileBinTemp();
         }
+        public void CleannerDownloads()
+        {
+            CleannerDownload();
+        }
         public void CleanerAll()
         {
             CleanerBrowser();
             CleanerRecile();
+            CleannerDownloads();
         }
         #endregion
     }
