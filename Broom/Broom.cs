@@ -11,7 +11,7 @@ namespace Broom
         #region Console
         static void PrintWelcome()
         {
-            StreamReader License = new StreamReader(@"D:\Programming\Broom\C#\LICENSE");
+            StreamReader License = new StreamReader(path: $@"LICENSE");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("*******************************************************");
