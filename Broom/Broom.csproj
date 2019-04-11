@@ -23,7 +23,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>\\10.10.5.231\MFC-doc-SIGNAL\14.IT\1.Для филиалов\Утилиты\BroomC\</UpdateUrl>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.3.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

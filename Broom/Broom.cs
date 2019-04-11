@@ -11,7 +11,7 @@ namespace Broom
         #region Console
         static void PrintWelcome()
         {
-            StreamReader License = new StreamReader(path: $@"LICENSE");
+            //StreamReader License = new StreamReader(path: $@"LICENSE");
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("*******************************************************");
@@ -38,12 +38,12 @@ namespace Broom
             Console.WriteLine("*******************************************************");
             Console.WriteLine();
 
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("*******************************************************");
-            Console.WriteLine();
-            Console.Write(License.ReadToEnd());
-            Console.WriteLine();
-            Console.WriteLine("*******************************************************");
+            //Console.ForegroundColor = ConsoleColor.DarkGray;
+            //Console.WriteLine("*******************************************************");
+            //Console.WriteLine();
+            //Console.Write(License.ReadToEnd());
+            //Console.WriteLine();
+            //Console.WriteLine("*******************************************************");
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
@@ -53,7 +53,7 @@ namespace Broom
             Console.WriteLine("v0.1 (Март 2018):   Создание программы");
             Console.WriteLine();
 
-            License.Close();
+            //License.Close();
         }
         static void PrintSwith()
         {
