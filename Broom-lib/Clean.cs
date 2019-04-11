@@ -10,6 +10,8 @@ namespace Broom_lib
         #region Переменные
         private string PathUsers;
         private string TempPath;
+        private string LogPath;
+        static StreamWriter LogFile;
         #endregion
 
         #region Constructor
@@ -20,6 +22,16 @@ namespace Broom_lib
 
             PathUsers = @"C:\Users\";
             TempPath = @"C:\Windows\Temp";
+            LogPath = @"C:\broom.log";
+
+            if (!File.Exists(LogPath)) File.Create(LogPath);           
+
+            LogFile = new StreamWriter(path: LogPath, true, Encoding.Default);
+
+            LogFile.WriteLine("------------------------------");
+            LogFile.WriteLine("");
+            LogFile.WriteLine(DateTime.Now);
+            LogFile.WriteLine("");
         }
         #endregion
 
@@ -29,12 +41,14 @@ namespace Broom_lib
             try
             {
                 var dir = new DirectoryInfo(path: $@"{directory}");
-                dir.Attributes = dir.Attributes & ~FileAttributes.ReadOnly;
+                dir.Attributes &= ~FileAttributes.ReadOnly;
                 dir.Delete(recursive: true);
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine();
                 Console.WriteLine($"{directory} успешно удалено");
+
+                LogFile.WriteLine($"{directory} успешно удалено");
             }
             catch (DirectoryNotFoundException ex)
             {
@@ -45,6 +59,8 @@ namespace Broom_lib
                 Console.WriteLine("***********************");
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                LogFile.WriteLine("Директория не найдена! Ошибка: " + ex.Message);
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -55,6 +71,8 @@ namespace Broom_lib
                 Console.WriteLine("***********************");
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                LogFile.WriteLine("Отсутствует доступ! Ошибка: " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -65,6 +83,8 @@ namespace Broom_lib
                 Console.WriteLine("***********************");
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                LogFile.WriteLine("Ошибка: " + ex.Message);
             }
         }
         #endregion
@@ -151,12 +171,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка кэша Google Chrome...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Google Chrome...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Temp(dir: s);
                 }
                 Console.WriteLine("Очистка кэша Google Chrome завершена");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Google Chrome завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         public void CleanerChromium()
@@ -166,11 +196,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка кэша Chromium...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Chromium...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Chromium(dir: s);
                 }
                 Console.WriteLine("Очистка кэша Chromium завершена");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Chromium завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         public void CleanerYandex()
@@ -180,11 +221,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка кэша Яндекс.Браузер...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Яндекс.Браузер...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Yandex(dir: s);
                 }
                 Console.WriteLine("Очистка кэша Яндекс.Браузер завершена");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Яндекс.Браузер завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         public void CleanerIE()
@@ -194,11 +246,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка кэша Internet Explorer...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Internet Explorer...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_IE(dir: s);
                 }
                 Console.WriteLine("Очистка кэша Internet Explorer завершена");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Internet Explorer завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         public void CleannerMozilla()
@@ -208,11 +271,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка кэша Mozilla...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Mozilla...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Mozilla(dir: s);
                 }
                 Console.WriteLine("Очистка кэша Mozilla завершена");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Mozilla завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         public void CleannerOpera()
@@ -222,11 +296,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка кэша Opera...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Opera...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Opera(dir: s);
                 }
                 Console.WriteLine("Очистка кэша Opera завершена");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка кэша Opera завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         #endregion
@@ -236,19 +321,41 @@ namespace Broom_lib
         {
             Console.WriteLine("Очистка Корзины...");
             Console.WriteLine();
+
+            LogFile.WriteLine("");
+            LogFile.WriteLine("Очистка Корзины...");
+            LogFile.WriteLine("---------------");
+
             Clear_RecileBin();
             Console.WriteLine("Очистка Корзины завершена");
+            Console.WriteLine();
+
+            LogFile.WriteLine("");
+            LogFile.WriteLine("Очистка Корзины завершена");
+            LogFile.WriteLine("---------------");
+            LogFile.WriteLine("");
 
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Удаление временных файлов...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Удаление временных файлов...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Temp(dir: s);
                 }
                 Console.WriteLine("Удаление временных файлов завершено");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Удаление временных файлов завершено");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         public void CleannerDownload()
@@ -258,11 +365,22 @@ namespace Broom_lib
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
                 Console.WriteLine("Очистка папки Загрузка...");
                 Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка папки Загрузка...");
+                LogFile.WriteLine("---------------");
+
                 foreach (string s in PathUser)
                 {
                     Clear_Download(dir: s);
                 }
                 Console.WriteLine("Очистка папки Загрузка завершена");
+                Console.WriteLine();
+
+                LogFile.WriteLine("");
+                LogFile.WriteLine("Очистка папки Загрузка завершена");
+                LogFile.WriteLine("---------------");
+                LogFile.WriteLine("");
             }
         }
         #endregion
@@ -292,5 +410,10 @@ namespace Broom_lib
             CleannerDownloads();
         }
         #endregion
+
+        public void LogFileClose()
+        {
+            LogFile.Close();
+        }
     }
 }

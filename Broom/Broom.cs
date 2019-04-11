@@ -21,7 +21,7 @@ namespace Broom
             Console.WriteLine("(c) Starinin Andrey (An.St.), Март 2018");
             Console.WriteLine("(c) Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2018");
             Console.WriteLine();
-            Console.WriteLine("Version: 0.3");
+            Console.WriteLine("Version: 0.5");
             Console.WriteLine("MIT License");
             Console.WriteLine("Language: C#");
             Console.WriteLine();
@@ -48,6 +48,8 @@ namespace Broom
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
             Console.WriteLine("Изменения:");
+            Console.WriteLine("v0.5 (Апрель 2019):   Добавление логгирования");
+            Console.WriteLine("v0.4 (Апрель 2019):   Добавление параметров командной строки");
             Console.WriteLine("v0.3 (Апрель 2019):   Обработка исключений при удалении директорий, цветовое оформление");
             Console.WriteLine("v0.2 (Апрель 2019):   Добавление в выод информации о лицензии");
             Console.WriteLine("v0.1 (Март 2018):   Создание программы");
@@ -74,6 +76,7 @@ namespace Broom
         }
         #endregion
 
+        #region Program
         static void Program(Clean broom)
         {
             PrintSwith();
@@ -99,22 +102,57 @@ namespace Broom
                     break;
             }
         }
+        static void SilentProgram(Clean broom)
+        {
+            PrintSwith();
+            broom.CleanerAll();
+        }
+        #endregion
 
         static void Main(string[] args)
         {
             Clean broom = new Clean();
-            PrintWelcome();
-            var YesNo = "";
-            do
+
+            if (args.Length == 0)
             {
-                Program(broom);
-                Console.WriteLine();
-                Console.WriteLine("Хотите продолжить");
-                Console.WriteLine("Y - да");
-                Console.WriteLine("Любой другой символ - нет");
-                YesNo = Console.ReadLine();
-            } while (YesNo == "Y");
-            Environment.Exit(0);
+                PrintWelcome();
+                var YesNo = "";
+                do
+                {
+                    Program(broom);
+                    Console.WriteLine();
+                    Console.WriteLine("Хотите продолжить");
+                    Console.WriteLine("Y - да");
+                    Console.WriteLine("Любой другой символ - нет");
+                    YesNo = Console.ReadLine();
+                } while (YesNo == "Y");
+                broom.LogFileClose();
+                Environment.Exit(0);
+            }
+            else
+            {
+                string CommandLineArg = args[0];
+                if (CommandLineArg == "s" || CommandLineArg == "silent")
+                {
+                    SilentProgram(broom);
+                }
+                else
+                {
+                    PrintWelcome();
+                    string YesNo;
+                    do
+                    {
+                        Program(broom);
+                        Console.WriteLine();
+                        Console.WriteLine("Хотите продолжить");
+                        Console.WriteLine("Y - да");
+                        Console.WriteLine("Любой другой символ - нет");
+                        YesNo = Console.ReadLine();
+                    } while (YesNo == "Y");
+                    broom.LogFileClose();
+                    Environment.Exit(0);
+                }
+            }
         }
     }
 }
