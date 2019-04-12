@@ -21,7 +21,7 @@ namespace Broom
             Console.WriteLine("(c) Starinin Andrey (An.St.), Март 2018");
             Console.WriteLine("(c) Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2018");
             Console.WriteLine();
-            Console.WriteLine("Version: 0.5");
+            Console.WriteLine("Version: 0.6");
             Console.WriteLine("MIT License");
             Console.WriteLine("Language: C#");
             Console.WriteLine();
@@ -48,6 +48,7 @@ namespace Broom
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
             Console.WriteLine("Изменения:");
+            Console.WriteLine("v0.6 (Апрель 2019):   Добавление 'тихого' режима");
             Console.WriteLine("v0.5 (Апрель 2019):   Добавление логгирования");
             Console.WriteLine("v0.4 (Апрель 2019):   Добавление параметров командной строки");
             Console.WriteLine("v0.3 (Апрель 2019):   Обработка исключений при удалении директорий, цветовое оформление");
@@ -102,11 +103,6 @@ namespace Broom
                     break;
             }
         }
-        static void SilentProgram(Clean broom)
-        {
-            PrintSwith();
-            broom.CleanerAll();
-        }
         #endregion
 
         static void Main(string[] args)
@@ -134,7 +130,8 @@ namespace Broom
                 string CommandLineArg = args[0];
                 if (CommandLineArg == "s" || CommandLineArg == "silent")
                 {
-                    SilentProgram(broom);
+                    broom.SetVisible(false);
+                    broom.CleanerAll();
                 }
                 else
                 {

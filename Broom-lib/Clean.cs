@@ -12,7 +12,8 @@ namespace Broom_lib
         private string TempPath;
         private string LogPath;
         static StreamWriter LogFile;
-        #endregion
+        private bool Visible;
+        #endregion       
 
         #region Constructor
         public Clean()
@@ -35,8 +36,40 @@ namespace Broom_lib
         }
         #endregion
 
+        public void SetVisible(bool visible)
+        {
+            Visible = visible;
+        }
+
+        #region Output
+        public void OutputConsole(string str, bool visible)
+        {
+            if (visible)
+            {
+                Console.WriteLine();
+                Console.WriteLine(str);
+                Console.WriteLine();
+            }            
+        }
+        public void OutputConsoleError(string str, bool visible)
+        {
+            if (visible)
+            {
+                Console.WriteLine();
+                Console.WriteLine("***********************");
+                Console.WriteLine(str);
+                Console.WriteLine("***********************");
+                Console.WriteLine();
+            }
+        }
+        public void OutputLogFile(string str)
+        {
+
+        }
+        #endregion
+
         #region Delete Folder & File
-        static void DeleteFolder(string directory)
+        public void DeleteFolder(string directory)
         {
             try
             {
@@ -45,19 +78,14 @@ namespace Broom_lib
                 dir.Delete(recursive: true);
 
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine();
-                Console.WriteLine($"{directory} успешно удалено");
+                OutputConsole(str: $"{directory} успешно удалено", visible: Visible);
 
                 LogFile.WriteLine($"{directory} успешно удалено");
             }
             catch (DirectoryNotFoundException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
-                Console.WriteLine("***********************");
-                Console.WriteLine("Директория не найдена! Ошибка: " + ex.Message);
-                Console.WriteLine("***********************");
-                Console.WriteLine();
+                OutputConsoleError("Директория не найдена! Ошибка: " + ex.Message, Visible);                
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                 LogFile.WriteLine("Директория не найдена! Ошибка: " + ex.Message);
@@ -65,11 +93,7 @@ namespace Broom_lib
             catch (UnauthorizedAccessException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
-                Console.WriteLine("***********************");
-                Console.WriteLine("Отсутствует доступ! Ошибка: " + ex.Message);
-                Console.WriteLine("***********************");
-                Console.WriteLine();
+                OutputConsoleError("Отсутствует доступ! Ошибка: " + ex.Message, Visible);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                 LogFile.WriteLine("Отсутствует доступ! Ошибка: " + ex.Message);
@@ -77,11 +101,7 @@ namespace Broom_lib
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
-                Console.WriteLine("***********************");
-                Console.WriteLine("Ошибка: " + ex.Message);
-                Console.WriteLine("***********************");
-                Console.WriteLine();
+                OutputConsoleError("Ошибка: " + ex.Message, Visible);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                 LogFile.WriteLine("Ошибка: " + ex.Message);
@@ -90,13 +110,13 @@ namespace Broom_lib
         #endregion
 
         #region Clear Browser
-        static void Clear_Mozilla(string dir)
+        public void Clear_Mozilla(string dir)
         {
             DeleteFolder(directory: $@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\OfflineCache");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails");
         }
-        static void Clear_Chrome(string dir)
+        public void Clear_Chrome(string dir)
         {
             DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache2\entries");
@@ -105,7 +125,7 @@ namespace Broom_lib
             DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache");
         }
-        static void Clear_Chromium(string dir)
+        public void Clear_Chromium(string dir)
         {
 
             DeleteFolder(directory: $@"{dir}\AppData\Local\Chromium\User Data\Default\Cache");
@@ -117,7 +137,7 @@ namespace Broom_lib
             DeleteFolder(directory: $@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
 
         }
-        static void Clear_Yandex(string dir)
+        public void Clear_Yandex(string dir)
         {
             DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cache");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\GPUCache");
@@ -128,14 +148,14 @@ namespace Broom_lib
             DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies-Journal");
         }
-        static void Clear_IE(string dir)
+        public void Clear_IE(string dir)
         {
             DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\Temporary Internet Files");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\WER");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\INetCache");
             DeleteFolder(directory: $@"{dir}\AppData\Local\Microsoft\Windows\WebCache");
         }
-        static void Clear_Opera(string dir)
+        public void Clear_Opera(string dir)
         {
             DeleteFolder(directory: $@"{dir}\AppData\Local\Opera Software\Opera Stable\Cache");
         }
@@ -169,8 +189,7 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка кэша Google Chrome...");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Google Chrome...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Google Chrome...");
@@ -180,8 +199,7 @@ namespace Broom_lib
                 {
                     Clear_Temp(dir: s);
                 }
-                Console.WriteLine("Очистка кэша Google Chrome завершена");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Google Chrome завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Google Chrome завершена");
@@ -194,8 +212,7 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка кэша Chromium...");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Chromium...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Chromium...");
@@ -205,8 +222,7 @@ namespace Broom_lib
                 {
                     Clear_Chromium(dir: s);
                 }
-                Console.WriteLine("Очистка кэша Chromium завершена");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Chromium завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Chromium завершена");
@@ -219,8 +235,7 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка кэша Яндекс.Браузер...");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Яндекс.Браузер...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Яндекс.Браузер...");
@@ -230,8 +245,7 @@ namespace Broom_lib
                 {
                     Clear_Yandex(dir: s);
                 }
-                Console.WriteLine("Очистка кэша Яндекс.Браузер завершена");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Яндекс.Браузер завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Яндекс.Браузер завершена");
@@ -244,8 +258,7 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка кэша Internet Explorer...");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Internet Explorer...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Internet Explorer...");
@@ -255,8 +268,7 @@ namespace Broom_lib
                 {
                     Clear_IE(dir: s);
                 }
-                Console.WriteLine("Очистка кэша Internet Explorer завершена");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Internet Explorer завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Internet Explorer завершена");
@@ -269,8 +281,7 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка кэша Mozilla...");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Mozilla...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Mozilla...");
@@ -280,8 +291,7 @@ namespace Broom_lib
                 {
                     Clear_Mozilla(dir: s);
                 }
-                Console.WriteLine("Очистка кэша Mozilla завершена");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Mozilla завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Mozilla завершена");
@@ -294,8 +304,7 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка кэша Opera...");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Opera...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Opera...");
@@ -305,8 +314,7 @@ namespace Broom_lib
                 {
                     Clear_Opera(dir: s);
                 }
-                Console.WriteLine("Очистка кэша Opera завершена");
-                Console.WriteLine();
+                OutputConsole("Очистка кэша Opera завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка кэша Opera завершена");
@@ -319,16 +327,15 @@ namespace Broom_lib
         #region Cleaner RecileBin & Temp
         public void CleanerRecileBinTemp()
         {
-            Console.WriteLine("Очистка Корзины...");
-            Console.WriteLine();
+            OutputConsole("Очистка Корзины...", Visible);
 
             LogFile.WriteLine("");
             LogFile.WriteLine("Очистка Корзины...");
             LogFile.WriteLine("---------------");
 
             Clear_RecileBin();
-            Console.WriteLine("Очистка Корзины завершена");
-            Console.WriteLine();
+
+            OutputConsole("Очистка Корзины завершена", Visible);
 
             LogFile.WriteLine("");
             LogFile.WriteLine("Очистка Корзины завершена");
@@ -338,8 +345,8 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Удаление временных файлов...");
-                Console.WriteLine();
+
+                OutputConsole("Удаление временных файлов...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Удаление временных файлов...");
@@ -349,8 +356,8 @@ namespace Broom_lib
                 {
                     Clear_Temp(dir: s);
                 }
-                Console.WriteLine("Удаление временных файлов завершено");
-                Console.WriteLine();
+
+                OutputConsole("Удаление временных файлов завершено", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Удаление временных файлов завершено");
@@ -363,8 +370,8 @@ namespace Broom_lib
             if (Directory.Exists(path: PathUsers))
             {
                 string[] PathUser = Directory.GetDirectories(path: PathUsers);
-                Console.WriteLine("Очистка папки Загрузка...");
-                Console.WriteLine();
+
+                OutputConsole("Очистка папки Загрузка...", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка папки Загрузка...");
@@ -374,8 +381,8 @@ namespace Broom_lib
                 {
                     Clear_Download(dir: s);
                 }
-                Console.WriteLine("Очистка папки Загрузка завершена");
-                Console.WriteLine();
+
+                OutputConsole("Очистка папки Загрузка завершена", Visible);
 
                 LogFile.WriteLine("");
                 LogFile.WriteLine("Очистка папки Загрузка завершена");
