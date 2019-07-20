@@ -3,6 +3,8 @@
 
 [![GitHub: Broom](https://img.shields.io/badge/GitHub-Broom-orange.svg)](https://github.com/anst-foto/Broom-csharp)
 
+[![CodeFactor](https://www.codefactor.io/repository/github/anst-foto/broom-csharp/badge)](https://www.codefactor.io/repository/github/anst-foto/broom-csharp)
+
 # Broom \(Метла\)
 
 Программа по очистке кэша браузеров и Корзины, удалению временных файлов.
