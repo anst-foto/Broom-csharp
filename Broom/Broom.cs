@@ -56,7 +56,6 @@ namespace Broom
         }
         public static void Clear_Chromium(string dir)
         {
-
             DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Cache");
             DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\GPUCache");
             DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Media Cache");
@@ -64,7 +63,6 @@ namespace Broom
             DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Application Cache");
             DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
             DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
-
         }
         public static void Clear_Yandex(string dir)
         {
