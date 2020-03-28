@@ -1,155 +1,269 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using Broom_lib;
 
 namespace Broom
 {
-    class Broom
+    public static class Broom
     {
-        #region Console
-        static void PrintWelcome()
+        #region event
+        public delegate void Message(string message);
+        public static event Message Info;
+        public static event Message Error;
+        public static event Message Successfully;
+        #endregion
+
+        private static string PathUsers = @"C:\Users\";
+
+        public static void DeleteFolder(string directory)
         {
-            //StreamReader License = new StreamReader(path: $@"LICENSE");
+            try
+            {
+                var dir = new DirectoryInfo($@"{directory}");
+                dir.Attributes &= ~FileAttributes.ReadOnly;
+                dir.Delete(true);
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("*******************************************************");
-            Console.WriteLine("Broom (Метла)");
-            Console.WriteLine("Очистка кэша и Корзины, удаление временных файлов");
-            Console.WriteLine();
-            Console.WriteLine("(c) Starinin Andrey (An.St.), Март 2018");
-            Console.WriteLine("(c) Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2018");
-            Console.WriteLine();
-            Console.WriteLine("Version: 0.6");
-            Console.WriteLine("MIT License");
-            Console.WriteLine("Language: C#");
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("***");
-            Console.WriteLine("GitHub - https://github.com/anst-foto/Broom-csharp");
-            Console.WriteLine();
-            Console.WriteLine("***");
-            Console.WriteLine("Основано на коде  - https://github.com/anst-foto/Broom");
-            Console.WriteLine("(c) Starinin Andrey (AnSt). 2017");
-            Console.WriteLine("(c) Автономное учреждение Воронежской области 'Многофункциональный центр предоставления государственных и муниципальных услуг'. 2017");
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("*******************************************************");
-            Console.WriteLine();
-
-            //Console.ForegroundColor = ConsoleColor.DarkGray;
-            //Console.WriteLine("*******************************************************");
-            //Console.WriteLine();
-            //Console.Write(License.ReadToEnd());
-            //Console.WriteLine();
-            //Console.WriteLine("*******************************************************");
-
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine();
-            Console.WriteLine("Изменения:");
-            Console.WriteLine("v0.6 (Апрель 2019):   Добавление 'тихого' режима");
-            Console.WriteLine("v0.5 (Апрель 2019):   Добавление логгирования");
-            Console.WriteLine("v0.4 (Апрель 2019):   Добавление параметров командной строки");
-            Console.WriteLine("v0.3 (Апрель 2019):   Обработка исключений при удалении директорий, цветовое оформление");
-            Console.WriteLine("v0.2 (Апрель 2019):   Добавление в выод информации о лицензии");
-            Console.WriteLine("v0.1 (Март 2018):   Создание программы");
-            Console.WriteLine();
-
-            //License.Close();
+                Successfully?.Invoke($"{directory} успешно удалено");
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Error?.Invoke("Ошибка: " + ex.Message);
+            }
         }
-        static void PrintSwith()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("***********************");
-            Console.WriteLine("Закройте все браузеры!");
-            Console.WriteLine("***********************");
 
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine();
-            Console.WriteLine("Выберите режим очистки:");
-            Console.WriteLine("1. Очистить только кэши браузеров");
-            Console.WriteLine("2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)");
-            Console.WriteLine("3. Очитстить только папку Загрузки (Downloads)");
-            Console.WriteLine("4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)");
-            Console.WriteLine("5. Выход");
-            Console.WriteLine();
+        #region Clear Browser
+        public static void Clear_Mozilla(string dir)
+        {
+            DeleteFolder($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\OfflineCache");
+            DeleteFolder($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries");
+            DeleteFolder($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails");
+        }
+        public static void Clear_Chrome(string dir)
+        {
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache2\entries");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Media Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache");
+        }
+        public static void Clear_Chromium(string dir)
+        {
+
+            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\GPUCache");
+            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Media Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Pepper Data");
+            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Application Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
+            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
+
+        }
+        public static void Clear_Yandex(string dir)
+        {
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\GPUCache");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Media Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Pepper Data");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Application Cache");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\Temp");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies");
+            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies-Journal");
+        }
+        public static void Clear_IE(string dir)
+        {
+            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\Temporary Internet Files");
+            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\WER");
+            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\INetCache");
+            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\WebCache");
+        }
+        public static void Clear_Opera(string dir)
+        {
+            DeleteFolder($@"{dir}\AppData\Local\Opera Software\Opera Stable\Cache");
         }
         #endregion
 
-        #region Program
-        static void Program(Clean broom)
+        #region Clear RecileBin & Temp
+        public static void Clear_Temp(string dir)
         {
-            PrintSwith();
-            int Key = Int32.Parse(Console.ReadLine());
-            switch (Key)
+            DeleteFolder($@"{dir}\AppData\Local\Temp");
+            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\AppCache");
+            DeleteFolder(@"C:\Windows\Temp");
+        }
+        public static void Clear_RecileBin()
+        {
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in drives)
             {
-                case 1:
-                    broom.CleanerBrowser();
-                    break;
-                case 2:
-                    broom.CleanerRecile();
-                    break;
-                case 3:
-                    broom.CleannerDownloads();
-                    break;
-                case 4:
-                    broom.CleanerAll();
-                    break;
-                case 5:
-                    break;
-                default:
-                    Console.WriteLine("Вы ввели неправильный режим");
-                    break;
+                string RecyclePath = $@"{drive}$Recycle.Bin";
+                DeleteFolder(RecyclePath);
+            }
+        }
+        public static void Clear_Download(string dir)
+        {
+            DeleteFolder($@"{dir}\Downloads");
+        }
+        #endregion
+
+        #region Cleaner Browser
+        public static void CleanerChrome()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+                Info?.Invoke("Очистка кэша Google Chrome...");
+                
+                foreach (string s in PathUser)
+                {
+                    Clear_Chrome(s);
+                }
+                Successfully?.Invoke("Очистка кэша Google Chrome завершена");
+            }
+        }
+        public static void CleanerChromium()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+                Info?.Invoke("Очистка кэша Chromium...");
+
+                foreach (string s in PathUser)
+                {
+                    Clear_Chromium(s);
+                }
+                Successfully?.Invoke("Очистка кэша Chromium завершена");
+            }
+        }
+        public static void CleanerYandex()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+                Info?.Invoke("Очистка кэша Яндекс.Браузер...");
+                
+                foreach (string s in PathUser)
+                {
+                    Clear_Yandex(s);
+                }
+                Successfully?.Invoke("Очистка кэша Яндекс.Браузер завершена");
+            }
+        }
+        public static void CleanerIE()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+                Info?.Invoke("Очистка кэша Internet Explorer...");
+
+                foreach (string s in PathUser)
+                {
+                    Clear_IE(s);
+                }
+                Successfully?.Invoke("Очистка кэша Internet Explorer завершена");
+            }
+        }
+        public static void CleannerMozilla()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+                Info?.Invoke("Очистка кэша Mozilla...");
+
+                foreach (string s in PathUser)
+                {
+                    Clear_Mozilla(s);
+                }
+                Successfully?.Invoke("Очистка кэша Mozilla завершена");
+            }
+        }
+        public static void CleannerOpera()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+                Info?.Invoke("Очистка кэша Opera...");
+
+                foreach (string s in PathUser)
+                {
+                    Clear_Opera(s);
+                }
+                Successfully?.Invoke("Очистка кэша Opera завершена");
             }
         }
         #endregion
 
-        static void Main(string[] args)
+        #region Cleaner RecileBin & Temp
+        public static void CleanerRecileBinTemp()
         {
-            Clean broom = new Clean();
+            Info?.Invoke("Очистка Корзины...");
+            
+            Clear_RecileBin();
 
-            if (args.Length == 0)
+            Successfully?.Invoke("Очистка Корзины завершена");
+
+            if (Directory.Exists(PathUsers))
             {
-                PrintWelcome();
-                var YesNo = "";
-                do
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+
+                Info?.Invoke("Удаление временных файлов...");
+
+                foreach (string s in PathUser)
                 {
-                    Program(broom);
-                    Console.WriteLine();
-                    Console.WriteLine("Хотите продолжить");
-                    Console.WriteLine("Y - да");
-                    Console.WriteLine("Любой другой символ - нет");
-                    YesNo = Console.ReadLine();
-                } while (YesNo == "Y");
-                broom.LogFileClose();
-                Environment.Exit(0);
-            }
-            else
-            {
-                string CommandLineArg = args[0];
-                if (CommandLineArg == "s" || CommandLineArg == "silent")
-                {
-                    broom.SetVisible(false);
-                    broom.CleanerAll();
+                    Clear_Temp(s);
                 }
-                else
-                {
-                    PrintWelcome();
-                    string YesNo;
-                    do
-                    {
-                        Program(broom);
-                        Console.WriteLine();
-                        Console.WriteLine("Хотите продолжить");
-                        Console.WriteLine("Y - да");
-                        Console.WriteLine("Любой другой символ - нет");
-                        YesNo = Console.ReadLine();
-                    } while (YesNo == "Y");
-                    broom.LogFileClose();
-                    Environment.Exit(0);
-                }
+
+                Successfully?.Invoke("Удаление временных файлов завершено");
             }
         }
+        public static void CleannerDownload()
+        {
+            if (Directory.Exists(PathUsers))
+            {
+                string[] PathUser = Directory.GetDirectories(PathUsers);
+
+                Info?.Invoke("Очистка папки Загрузка...");
+
+                foreach (string s in PathUser)
+                {
+                    Clear_Download(s);
+                }
+
+                Successfully?.Invoke("Очистка папки Загрузка завершена");
+            }
+        }
+        #endregion
+
+        #region Cleaner
+        public static void CleanerBrowser()
+        {
+            CleanerChrome();
+            CleanerChromium();
+            CleanerYandex();
+            CleanerIE();
+            CleannerMozilla();
+            CleannerOpera();
+        }
+        public static void CleanerRecile()
+        {
+            CleanerRecileBinTemp();
+        }
+        public static void CleannerDownloads()
+        {
+            CleannerDownload();
+        }
+        public static void CleanerAll()
+        {
+            CleanerBrowser();
+            CleanerRecile();
+            CleannerDownloads();
+        }
+        #endregion
     }
 }
