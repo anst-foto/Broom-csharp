@@ -41,6 +41,8 @@ namespace Broom
                 case 4:
                     Broom.CleanerAll();
                     break;
+                case 5:
+                    break;
                 default:
                     WriteLine("Неверный режим работы");
                     break;
