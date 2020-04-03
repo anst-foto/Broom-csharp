@@ -14,7 +14,64 @@ namespace Broom
 
         private const string PathUsers = @"C:\Users\";
 
-        private static void DeleteFolder(string directory)
+        #region Delete folder and file
+        private static void DeleteFolder(string dir)
+        {
+            try
+            {
+                var path = new DirectoryInfo($@"{dir}");
+                path.Attributes &= ~FileAttributes.ReadOnly;
+                path.Delete(true);
+
+                Successfully?.Invoke($"{dir} успешно удалено");
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
+            }
+            catch (IOException ex)
+            {
+                Error?.Invoke("Директория уже используется! Ошибка: " + ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Error?.Invoke("Ошибка: " + ex.Message);
+            }
+        }
+        private static void DeleteFile(string file)
+        {
+            try
+            {
+                File.Delete(file);
+
+                Successfully?.Invoke($"{file} успешно удалён");
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
+            }
+            catch (IOException ex)
+            {
+                Error?.Invoke("Указанный файл используется! Ошибка: " + ex.Message);
+            }
+            catch (NotSupportedException ex)
+            {
+                Error?.Invoke("Параметр 'path' задан в недопустимом формате! Ошибка: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Error?.Invoke("Ошибка: " + ex.Message);
+            }
+        }
+        private static void DeleteFoldersFiles(string directory)
         {
             if (Directory.Exists(directory))
             {
@@ -23,61 +80,13 @@ namespace Broom
                     var dirs = Directory.GetDirectories(directory);
                     foreach (var dir in dirs)
                     {
-                        try
-                        {
-                            var path = new DirectoryInfo($@"{dir}");
-                            path.Attributes &= ~FileAttributes.ReadOnly;
-                            path.Delete(true);
-
-                            Successfully?.Invoke($"{directory} успешно удалено");
-                        }
-                        catch (DirectoryNotFoundException ex)
-                        {
-                            Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
-                        }
-                        catch (IOException ex)
-                        {
-                            Error?.Invoke("Директория уже используется! Ошибка: " + ex.Message);
-                        }
-                        catch (UnauthorizedAccessException ex)
-                        {
-                            Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
-                        }
-                        catch (Exception ex)
-                        {
-                            Error?.Invoke("Ошибка: " + ex.Message);
-                        }
+                        DeleteFolder(dir);
                     }
 
                     var files = Directory.GetFiles(directory);
                     foreach (var file in files)
                     {
-                        try
-                        {
-                            File.Delete(file);
-
-                            Successfully?.Invoke($"{file} успешно удалён");
-                        }
-                        catch (DirectoryNotFoundException ex)
-                        {
-                            Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
-                        }
-                        catch (UnauthorizedAccessException ex)
-                        {
-                            Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
-                        }
-                        catch (IOException ex)
-                        {
-                            Error?.Invoke("Указанный файл используется! Ошибка: " + ex.Message);
-                        }
-                        catch (NotSupportedException ex)
-                        {
-                            Error?.Invoke("Параметр 'path' задан в недопустимом формате! Ошибка: " + ex.Message);
-                        }
-                        catch (Exception ex)
-                        {
-                            Error?.Invoke("Ошибка: " + ex.Message);
-                        }
+                        DeleteFile(file);
                     }
                 }
                 catch (DirectoryNotFoundException ex)
@@ -98,95 +107,96 @@ namespace Broom
                 }
             }            
         }
+        #endregion
 
-        #region Clear Browser
+        #region Clear browser
         private static void Clear_Edge(string dir)
         {
             // Edge
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Media Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Storage\ext");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Service Worker");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge\User Data\ShaderCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Media Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Storage\ext");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge\User Data\Default\Service Worker");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge\User Data\ShaderCache");
 
             // Edge SxS
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Media Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Storage\ext");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Service Worker");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\ShaderCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Media Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Storage\ext");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\Default\Service Worker");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Edge SxS\User Data\ShaderCache");
         }
 
         private static void Clear_Vivaldi(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Vivaldi\User Data\Default\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Application Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Cookies");
-            DeleteFolder($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Cookies-Journal");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Vivaldi\User Data\Default\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Application Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Cookies");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Vivaldi\User Data\Default\Cookies-Journal");
         }
 
         private static void Clear_Mozilla(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\OfflineCache");
-            DeleteFolder($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries");
-            DeleteFolder($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\OfflineCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\cache2\entries");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Mozilla\Firefox\Profiles\*.default\thumbnails");
         }
 
         private static void Clear_Chrome(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache2\entries");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Media Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Storage\ext");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Service Worker");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\ShaderCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cache2\entries");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Media Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\ChromeDWriteFontCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Storage\ext");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Service Worker");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\ShaderCache");
         }
 
         private static void Clear_Chromium(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Media Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Pepper Data");
-            DeleteFolder($@"{dir}\AppData\Local\Chromium\User Data\Default\Application Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
-            DeleteFolder($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Chromium\User Data\Default\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Chromium\User Data\Default\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Chromium\User Data\Default\Media Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Chromium\User Data\Default\Pepper Data");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Chromium\User Data\Default\Application Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies-Journal");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Google\Chrome\User Data\Default\Cookies");
         }
 
         private static void Clear_Yandex(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Media Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Pepper Data");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Application Cache");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\Temp");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies");
-            DeleteFolder($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies-Journal");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Media Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Pepper Data");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Application Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\Temp");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Yandex\YandexBrowser\User Data\Default\Cookies-Journal");
         }
 
         private static void Clear_IE(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\Temporary Internet Files");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\WER");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\INetCache");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\WebCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Windows\Temporary Internet Files");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Windows\WER");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Windows\INetCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Windows\WebCache");
         }
 
         private static void Clear_Opera(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\GPUCache");
-            DeleteFolder($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\ShaderCache");
-            DeleteFolder($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\Jump List Icons");
-            DeleteFolder($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\Jump List IconsOld\Jump List Icons");
-            DeleteFolder($@"{dir}\AppData\Local\Opera Software\Opera Stable\Cache");
+            DeleteFoldersFiles($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\GPUCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\ShaderCache");
+            DeleteFoldersFiles($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\Jump List Icons");
+            DeleteFoldersFiles($@"{dir}\AppData\Roaming\Opera Software\Opera Stable\Jump List IconsOld\Jump List Icons");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Opera Software\Opera Stable\Cache");
         }
         #endregion
 
@@ -194,9 +204,9 @@ namespace Broom
 
         private static void Clear_Temp(string dir)
         {
-            DeleteFolder($@"{dir}\AppData\Local\Temp");
-            DeleteFolder($@"{dir}\AppData\Local\Microsoft\Windows\AppCache");
-            DeleteFolder(@"C:\Windows\Temp");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Temp");
+            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Windows\AppCache");
+            DeleteFoldersFiles(@"C:\Windows\Temp");
         }
 
         private static void Clear_RecileBin()
@@ -205,17 +215,17 @@ namespace Broom
             foreach (var drive in drives)
             {
                 var RecyclePath = $@"{drive}$Recycle.Bin";
-                DeleteFolder(RecyclePath);
+                DeleteFoldersFiles(RecyclePath);
             }
         }
 
         private static void Clear_Download(string dir)
         {
-            DeleteFolder($@"{dir}\Downloads");
+            DeleteFoldersFiles($@"{dir}\Downloads");
         }
         #endregion
 
-        #region Cleaner Browser
+        #region Cleaner browser
 
         private static void CleanerChrome()
         {
