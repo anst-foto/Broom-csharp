@@ -5,9 +5,9 @@ using static System.Console;
 
 namespace Broom
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             #region event
             Broom.Info += BroomConsole.InfoMessage;
@@ -23,11 +23,10 @@ namespace Broom
             BroomConsole.PrintMenu();
 
             BroomLogFile.LogFileStart();
-            
-            int choice;
-            choice = Convert.ToInt32(ReadLine());
-            
-            switch(choice)
+
+            var choice = Convert.ToInt32(ReadLine());
+
+            switch (choice)
             {
                 case 1:
                     Broom.CleanerBrowser();
@@ -36,7 +35,7 @@ namespace Broom
                     Broom.CleanerRecile();
                     break;
                 case 3:
-                    Broom.CleannerDownloads();
+                    Broom.CleanerDownloads();
                     break;
                 case 4:
                     Broom.CleanerAll();

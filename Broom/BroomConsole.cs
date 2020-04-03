@@ -20,7 +20,7 @@ namespace Broom
             WriteLine();
             WriteLine("License: GNU General Public License v3.0");
             WriteLine();
-            WriteLine("Version: 0.7");
+            WriteLine("Version: 0.8");
             WriteLine("");
             WriteLine("Language: C#");
             WriteLine();
@@ -40,6 +40,7 @@ namespace Broom
             ForegroundColor = ConsoleColor.DarkGreen;
             WriteLine();
             WriteLine("Изменения:");
+            WriteLine("v0.8 (Апрель 2020):   Изменение доступности методов в классах, добавление очистки браузеров Microsoft Edge, Vivaldi");
             WriteLine("v0.7 (Март 2020):   Переработка программы под .Net Core, изменение лицензирования");
             WriteLine("v0.6 (Апрель 2019):   Добавление 'тихого' режима");
             WriteLine("v0.5 (Апрель 2019):   Добавление логгирования");
@@ -59,10 +60,8 @@ namespace Broom
             // чтение из файла
             try
             {
-                using (StreamReader license = new StreamReader(@"C:\AnSt\Programming\Broom-cs_2\Broom\LICENSE"))
-                {
-                    WriteLine(license.ReadToEnd());
-                }
+                using var license = new StreamReader(@"C:\AnSt\Programming\Broom-cs_2\Broom\LICENSE");
+                WriteLine(license.ReadToEnd());
             }
             catch (Exception e)
             {

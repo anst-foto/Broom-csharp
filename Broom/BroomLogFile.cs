@@ -8,16 +8,14 @@ namespace Broom
 {
     public static class BroomLogFile
     {
-        private static readonly string logFilePath = @"broom.log";
+        private const string logFilePath = @"broom.log";
 
         private static void WriteLogFile(string message)
         {
             try
             {
-                using (StreamWriter logFile = new StreamWriter(logFilePath, true, Encoding.Default))
-                {
-                    logFile.WriteLine(message);
-                }
+                using var logFile = new StreamWriter(logFilePath, true, Encoding.Default);
+                logFile.WriteLine(message);
             }
             catch (Exception e)
             {
@@ -26,36 +24,31 @@ namespace Broom
         }
         public static void LogFileStart()
         {
-            string msg;
-            msg = "=============== " + DateTime.Today.ToString() + " ===============";
+            var msg = "=============== " + DateTime.Today.ToString() + " ===============";
             WriteLogFile(msg);
         }
         public static void LogFileEnd()
         {
-            string msg;
-            msg = "=============== END ===============";
+            const string msg = "=============== END ===============";
             WriteLogFile(msg);
         }
         public static void SuccessfullyMessage(string message)
         {
-            string msg;
-            msg = DateTime.Now.ToString();
+            var msg = DateTime.Now.ToString();
             msg += " - Successfully : ";
             msg += message;
             WriteLogFile(msg);
         }
         public static void ErrorMessage(string message)
         {
-            string msg;
-            msg = DateTime.Now.ToString();
+            var msg = DateTime.Now.ToString();
             msg += " - Error : ";
             msg += message;
             WriteLogFile(msg);
         }
         public static void InfoMessage(string message)
         {
-            string msg;
-            msg = DateTime.Now.ToString();
+            var msg = DateTime.Now.ToString();
             msg += " - Info : ";
             msg += message;
             WriteLogFile(msg);
