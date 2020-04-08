@@ -28,19 +28,31 @@ namespace Broom
 
             switch (choice)
             {
-                case 1:
+                case 1: // 1. Очистить только кэши браузеров
                     Broom.CleanerBrowser();
                     break;
-                case 2:
+                case 2: // 2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)
                     Broom.CleanerRecile();
                     break;
-                case 3:
+                case 3: // 3. Очитстить только папку Загрузки (Downloads)
                     Broom.CleanerDownloads();
                     break;
-                case 4:
+                case 4: // 4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)
+                    Broom.CleanerBrowser();
+                    Broom.CleanerRecile();
+                    break;
+                case 5: // 5. Очитстить кэши браузеров и папку Загрузки (Downloads)
+                    Broom.CleanerBrowser();
+                    Broom.CleanerDownloads();
+                    break;
+                case 6: // 6. Очитстить Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)
+                    Broom.CleanerRecile();
+                    Broom.CleanerDownloads();
+                    break;
+                case 7: // 7. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)
                     Broom.CleanerAll();
                     break;
-                case 5:
+                case 0: // 0. Выход
                     break;
                 default:
                     WriteLine("Неверный режим работы");

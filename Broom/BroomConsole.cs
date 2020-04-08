@@ -20,7 +20,7 @@ namespace Broom
             WriteLine();
             WriteLine("License: GNU General Public License v3.0");
             WriteLine();
-            WriteLine("Version: 0.8");
+            WriteLine("Version: 0.9");
             WriteLine("");
             WriteLine("Language: C#");
             WriteLine();
@@ -40,6 +40,7 @@ namespace Broom
             ForegroundColor = ConsoleColor.DarkGreen;
             WriteLine();
             WriteLine("Изменения:");
+            WriteLine("v0.9 (Апрель 2020):   Изменение консольного меню. Fix anst-foto/Broom-csharp#4");
             WriteLine("v0.8 (Апрель 2020):   Изменение доступности методов в классах, добавление очистки браузеров Microsoft Edge, Vivaldi");
             WriteLine("v0.7 (Март 2020):   Переработка программы под .Net Core, изменение лицензирования");
             WriteLine("v0.6 (Апрель 2019):   Добавление 'тихого' режима");
@@ -78,8 +79,11 @@ namespace Broom
             WriteLine("1. Очистить только кэши браузеров");
             WriteLine("2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)");
             WriteLine("3. Очитстить только папку Загрузки (Downloads)");
-            WriteLine("4. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
-            WriteLine("5. Выход");
+            WriteLine("4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)");
+            WriteLine("5. Очитстить кэши браузеров и папку Загрузки (Downloads)");
+            WriteLine("6. Очитстить Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
+            WriteLine("7. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
+            WriteLine("0. Выход");
             WriteLine();
             ResetColor();
         }
