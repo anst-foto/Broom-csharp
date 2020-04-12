@@ -1,0 +1,56 @@
+﻿<Window x:Class="BroomGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BroomGUI"
+        mc:Ignorable="d"
+        Title="Broom" Height="450" Width="800"
+        x:Name="Window"
+        Closing="Window_Closing" Loaded="Window_Loaded"
+        Icon="/Broom.png">
+
+    <!--#region Trigger-->
+    <!--
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerBrowser, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerRecile, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerDownloads, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerBrowserAndRecile, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerBrowserAndDownloads, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerRecileAndDownloads, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=radioCleanerAll, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    -->
+    <!--#endregion-->
+
+    <Grid x:Name="Grid">
+        <RadioButton x:Name="radioCleanerBrowser" GroupName="Cleaner" Content="Очистить только кэши браузеров" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radioCleanerRecile" GroupName="Cleaner" Content="Очитстить только Корзину и временные файлы" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="radioCleanerDownloads" GroupName="Cleaner" Content="Очитстить только папку Загрузки" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="radioCleanerBrowserAndRecile" GroupName="Cleaner" Content="Очитстить кэши браузеров и Корзину с временными файлами" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="radioCleanerBrowserAndDownloads" GroupName="Cleaner" Content="Очитстить кэши браузеров и папку Загрузки" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="radioCleanerRecileAndDownloads" GroupName="Cleaner" Content="Очитстить Корзину с временными файлами и папку Загрузки" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="radioCleanerAll" GroupName="Cleaner" Content="Очитстить кэши браузеров и Корзину с временными файлами и папкой Загрузки" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" />
+        <Button x:Name="buttonClear" Content="Очистить" HorizontalAlignment="Left" Margin="634,46,0,0" VerticalAlignment="Top" FontFamily="Cambria" FontSize="22" Click="ButtonClear_Click"/>
+        <TextBlock x:Name="Log" HorizontalAlignment="Center" Margin="0,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="304" Width="780"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>

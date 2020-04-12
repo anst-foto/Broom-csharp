@@ -1,10 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Windows;
 
-using static System.Console;
-
-namespace Broom
+namespace BroomGUI
 {
     public static class BroomLogFile
     {
@@ -19,7 +19,7 @@ namespace Broom
             }
             catch (Exception e)
             {
-                WriteLine(e.Message);
+                MessageBox.Show(e.Message);
             }
         }
         public static void LogFileStart()
