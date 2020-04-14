@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace BroomGUI
+namespace BroomDLL
 {
     public static class Broom
     {
-        #region event
+        #region Event
         public delegate void Message(string message);
         public static event Message Info;
         public static event Message Error;
