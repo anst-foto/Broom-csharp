@@ -1,21 +1,22 @@
 ﻿using System;
+using BroomDLL;
 
 using static System.Console;
 
-namespace Broom
+namespace BroomConsole
 {
     internal static class Program
     {
         private static void Main(string[] args)
         {
             #region event
-            BroomDLL.Broom.Info += BroomConsole.InfoMessage;
-            BroomDLL.Broom.Error += BroomConsole.ErrorMessage;
-            BroomDLL.Broom.Successfully += BroomConsole.SuccessfullyMessage;
+            Broom.Info += BroomConsole.InfoMessage;
+            Broom.Error += BroomConsole.ErrorMessage;
+            Broom.Successfully += BroomConsole.SuccessfullyMessage;
 
-            BroomDLL.Broom.Info += BroomLogFile.InfoMessage;
-            BroomDLL.Broom.Error += BroomLogFile.ErrorMessage;
-            BroomDLL.Broom.Successfully += BroomLogFile.SuccessfullyMessage;
+            Broom.Info += BroomLogFile.InfoMessage;
+            Broom.Error += BroomLogFile.ErrorMessage;
+            Broom.Successfully += BroomLogFile.SuccessfullyMessage;
             #endregion
 
             BroomConsole.PrintWelcome();

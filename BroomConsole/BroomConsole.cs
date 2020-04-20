@@ -3,7 +3,7 @@ using System.IO;
 
 using static System.Console;
 
-namespace Broom
+namespace BroomConsole
 {
     public static class BroomConsole
     {
