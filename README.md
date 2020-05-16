@@ -1,7 +1,5 @@
 [![GitHub](https://img.shields.io/github/license/anst-foto/Broom-csharp)](/LICENSE)
-![Language: C#](https://img.shields.io/badge/language-C%23-red.svg) [![CodeFactor](https://www.codefactor.io/repository/github/anst-foto/broom-csharp/badge)](https://www.codefactor.io/repository/github/anst-foto/broom-csharp)
-
-[![GitHub: Broom](https://img.shields.io/badge/GitHub-Broom-orange.svg)](https://github.com/anst-foto/Broom-csharp)
+![Language: C#](https://img.shields.io/badge/language-C%23-red.svg) [![CodeFactor](https://www.codefactor.io/repository/github/anst-foto/broom-csharp/badge)](https://www.codefactor.io/repository/github/anst-foto/broom-csharp) [![GitHub: Broom](https://img.shields.io/badge/GitHub-Broom-orange.svg)](https://github.com/anst-foto/Broom-csharp)
 
 # Broom \(Метла\)
 
