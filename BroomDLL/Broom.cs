@@ -73,38 +73,36 @@ namespace BroomDLL
         }
         private static void DeleteFoldersFiles(string directory)
         {
-            if (Directory.Exists(directory))
+            if (!Directory.Exists(directory)) return;
+            try
             {
-                try
+                var dirs = Directory.GetDirectories(directory);
+                foreach (var dir in dirs)
                 {
-                    var dirs = Directory.GetDirectories(directory);
-                    foreach (var dir in dirs)
-                    {
-                        DeleteFolder(dir);
-                    }
+                    DeleteFolder(dir);
+                }
 
-                    var files = Directory.GetFiles(directory);
-                    foreach (var file in files)
-                    {
-                        DeleteFile(file);
-                    }
-                }
-                catch (DirectoryNotFoundException ex)
+                var files = Directory.GetFiles(directory);
+                foreach (var file in files)
                 {
-                    Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
+                    DeleteFile(file);
                 }
-                catch (IOException ex)
-                {
-                    Error?.Invoke("Директория уже используется! Ошибка: " + ex.Message);
-                }
-                catch (UnauthorizedAccessException ex)
-                {
-                    Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Error?.Invoke("Ошибка: " + ex.Message);
-                }
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Error?.Invoke("Директория не найдена! Ошибка: " + ex.Message);
+            }
+            catch (IOException ex)
+            {
+                Error?.Invoke("Директория уже используется! Ошибка: " + ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Error?.Invoke("Отсутствует доступ! Ошибка: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Error?.Invoke("Ошибка: " + ex.Message);
             }
         }
         #endregion
@@ -229,122 +227,106 @@ namespace BroomDLL
 
         private static void CleanerChrome()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Google Chrome...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Google Chrome...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Chrome(path);
-                }
-                Successfully?.Invoke("Очистка кэша Google Chrome завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Chrome(path);
             }
+            Successfully?.Invoke("Очистка кэша Google Chrome завершена");
         }
 
         private static void CleanerChromium()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Chromium...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Chromium...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Chromium(path);
-                }
-                Successfully?.Invoke("Очистка кэша Chromium завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Chromium(path);
             }
+            Successfully?.Invoke("Очистка кэша Chromium завершена");
         }
 
         private static void CleanerYandex()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Яндекс.Браузер...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Яндекс.Браузер...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Yandex(path);
-                }
-                Successfully?.Invoke("Очистка кэша Яндекс.Браузер завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Yandex(path);
             }
+            Successfully?.Invoke("Очистка кэша Яндекс.Браузер завершена");
         }
 
         private static void CleanerIE()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Internet Explorer...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Internet Explorer...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_IE(path);
-                }
-                Successfully?.Invoke("Очистка кэша Internet Explorer завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_IE(path);
             }
+            Successfully?.Invoke("Очистка кэша Internet Explorer завершена");
         }
 
         private static void CleanerEdge()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Edge...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Edge...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Edge(path);
-                }
-                Successfully?.Invoke("Очистка кэша Edge завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Edge(path);
             }
+            Successfully?.Invoke("Очистка кэша Edge завершена");
         }
 
         private static void CleanerVivaldi()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Vivaldi...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Vivaldi...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Vivaldi(path);
-                }
-                Successfully?.Invoke("Очистка кэша Vivaldi завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Vivaldi(path);
             }
+            Successfully?.Invoke("Очистка кэша Vivaldi завершена");
         }
 
         private static void CleanerMozilla()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Mozilla...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Mozilla...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Mozilla(path);
-                }
-                Successfully?.Invoke("Очистка кэша Mozilla завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Mozilla(path);
             }
+            Successfully?.Invoke("Очистка кэша Mozilla завершена");
         }
 
         private static void CleanerOpera()
         {
-            if (Directory.Exists(PathUsers))
-            {
-                var PathUser = Directory.GetDirectories(PathUsers);
-                Info?.Invoke("Очистка кэша Opera...");
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+            Info?.Invoke("Очистка кэша Opera...");
 
-                foreach (var path in PathUser)
-                {
-                    Clear_Opera(path);
-                }
-                Successfully?.Invoke("Очистка кэша Opera завершена");
+            foreach (var path in PathUser)
+            {
+                Clear_Opera(path);
             }
+            Successfully?.Invoke("Очистка кэша Opera завершена");
         }
         #endregion
 
@@ -358,36 +340,32 @@ namespace BroomDLL
 
             Successfully?.Invoke("Очистка Корзины завершена");
 
-            if (Directory.Exists(PathUsers))
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+
+            Info?.Invoke("Удаление временных файлов...");
+
+            foreach (var path in PathUser)
             {
-                var PathUser = Directory.GetDirectories(PathUsers);
-
-                Info?.Invoke("Удаление временных файлов...");
-
-                foreach (var path in PathUser)
-                {
-                    Clear_Temp(path);
-                }
-
-                Successfully?.Invoke("Удаление временных файлов завершено");
+                Clear_Temp(path);
             }
+
+            Successfully?.Invoke("Удаление временных файлов завершено");
         }
 
         private static void CleanerDownload()
         {
-            if (Directory.Exists(PathUsers))
+            if (!Directory.Exists(PathUsers)) return;
+            var PathUser = Directory.GetDirectories(PathUsers);
+
+            Info?.Invoke("Очистка папки Загрузка...");
+
+            foreach (var path in PathUser)
             {
-                var PathUser = Directory.GetDirectories(PathUsers);
-
-                Info?.Invoke("Очистка папки Загрузка...");
-
-                foreach (var path in PathUser)
-                {
-                    Clear_Download(path);
-                }
-
-                Successfully?.Invoke("Очистка папки Загрузка завершена");
+                Clear_Download(path);
             }
+
+            Successfully?.Invoke("Очистка папки Загрузка завершена");
         }
         #endregion
 

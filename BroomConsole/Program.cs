@@ -1,15 +1,14 @@
 ﻿using System;
 using BroomDLL;
-
 using static System.Console;
 
 namespace BroomConsole
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
-            #region event
+            #region Event
             Broom.Info += BroomConsole.InfoMessage;
             Broom.Error += BroomConsole.ErrorMessage;
             Broom.Successfully += BroomConsole.SuccessfullyMessage;
@@ -29,28 +28,28 @@ namespace BroomConsole
             switch (choice)
             {
                 case 1: // 1. Очистить только кэши браузеров
-                    BroomDLL.Broom.CleanerBrowser();
+                    Broom.CleanerBrowser();
                     break;
                 case 2: // 2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)
-                    BroomDLL.Broom.CleanerRecile();
+                    Broom.CleanerRecile();
                     break;
                 case 3: // 3. Очитстить только папку Загрузки (Downloads)
-                    BroomDLL.Broom.CleanerDownloads();
+                    Broom.CleanerDownloads();
                     break;
                 case 4: // 4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)
-                    BroomDLL.Broom.CleanerBrowser();
-                    BroomDLL.Broom.CleanerRecile();
+                    Broom.CleanerBrowser();
+                    Broom.CleanerRecile();
                     break;
                 case 5: // 5. Очитстить кэши браузеров и папку Загрузки (Downloads)
-                    BroomDLL.Broom.CleanerBrowser();
-                    BroomDLL.Broom.CleanerDownloads();
+                    Broom.CleanerBrowser();
+                    Broom.CleanerDownloads();
                     break;
                 case 6: // 6. Очитстить Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)
-                    BroomDLL.Broom.CleanerRecile();
-                    BroomDLL.Broom.CleanerDownloads();
+                    Broom.CleanerRecile();
+                    Broom.CleanerDownloads();
                     break;
                 case 7: // 7. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)
-                    BroomDLL.Broom.CleanerAll();
+                    Broom.CleanerAll();
                     break;
                 case 0: // 0. Выход
                     break;

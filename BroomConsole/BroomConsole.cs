@@ -59,12 +59,10 @@ namespace BroomConsole
             ForegroundColor = ConsoleColor.DarkGray;
             WriteLine("*******************************************************");
             WriteLine();
-            // TO-DO
-            // Вывод лицензии
-            // чтение из файла
+            // TODO Вывод лицензии чтение из файла
             try
             {
-                using var license = new StreamReader(@"C:\AnSt\Programming\Broom-cs_2\Broom\LICENSE");
+                using var license = new StreamReader(@"D:\AnSt\Programming\Broom-csharp\LICENSE");
                 WriteLine(license.ReadToEnd());
             }
             catch (Exception e)

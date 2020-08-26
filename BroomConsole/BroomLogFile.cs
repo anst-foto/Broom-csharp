@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -24,7 +25,7 @@ namespace BroomConsole
         }
         public static void LogFileStart()
         {
-            var msg = "=============== " + DateTime.Today.ToString() + " ===============";
+            var msg = "=============== " + DateTime.Today + " ===============";
             WriteLogFile(msg);
         }
         public static void LogFileEnd()
@@ -34,23 +35,17 @@ namespace BroomConsole
         }
         public static void SuccessfullyMessage(string message)
         {
-            var msg = DateTime.Now.ToString();
-            msg += " - Successfully : ";
-            msg += message;
+            var msg = DateTime.Now.ToString() + " - Successfully : " + message;
             WriteLogFile(msg);
         }
         public static void ErrorMessage(string message)
         {
-            var msg = DateTime.Now.ToString();
-            msg += " - Error : ";
-            msg += message;
+            var msg = DateTime.Now.ToString() + " - Error : " + message;
             WriteLogFile(msg);
         }
         public static void InfoMessage(string message)
         {
-            var msg = DateTime.Now.ToString();
-            msg += " - Info : ";
-            msg += message;
+            var msg = DateTime.Now.ToString() + " - Info : " + message;
             WriteLogFile(msg);
         }
     }
