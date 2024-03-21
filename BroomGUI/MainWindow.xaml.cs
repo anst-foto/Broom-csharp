@@ -18,41 +18,33 @@ namespace BroomGUI
             Broom.Info += InfoMessage;
             Broom.Error += ErrorMessage;
             Broom.Successfully += SuccessfullyMessage;
+            CommonBrowsers.Error += ErrorMessage;
 
             Broom.Info += BroomLogFile.InfoMessage;
             Broom.Error += BroomLogFile.ErrorMessage;
             Broom.Successfully += BroomLogFile.SuccessfullyMessage;
+            BroomLogFile.WriteLogException += ExceptionMessage;
             #endregion
         }
-        
+
+        private static void ExceptionMessage(string message)
+        {
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
             if (radioCleanerBrowser.IsChecked == true)
             {
-                Broom.CleanerBrowser();
+                CommonBrowsers.CleanerBrowsers();
             }
             else if (radioCleanerDownloads.IsChecked == true)
             {
-                Broom.CleanerDownloads();
+                Broom.CleanerDownload();
             }
             else if (radioCleanerRecile.IsChecked == true)
             {
                 Broom.CleanerRecile();
-            }
-            else if (radioCleanerBrowserAndDownloads.IsChecked == true)
-            {
-                Broom.CleanerBrowser();
-                Broom.CleanerDownloads();
-            }
-            else if (radioCleanerBrowserAndRecile.IsChecked == true)
-            {
-                Broom.CleanerBrowser();
-                Broom.CleanerRecile();
-            }
-            else if (radioCleanerRecileAndDownloads.IsChecked == true)
-            {
-                Broom.CleanerRecile();
-                Broom.CleanerDownloads();
             }
             else if (radioCleanerAll.IsChecked == true)
             {

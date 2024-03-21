@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroomDLL", "BroomDLL\BroomD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BroomConsole", "BroomConsole\BroomConsole.csproj", "{B1F0102D-E262-412B-A7F7-333407225847}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroomTest", "BroomTest\BroomTest.csproj", "{1B5C250C-43CC-4926-BCC9-43647C1AC3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B1F0102D-E262-412B-A7F7-333407225847}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F0102D-E262-412B-A7F7-333407225847}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F0102D-E262-412B-A7F7-333407225847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B5C250C-43CC-4926-BCC9-43647C1AC3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B5C250C-43CC-4926-BCC9-43647C1AC3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B5C250C-43CC-4926-BCC9-43647C1AC3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B5C250C-43CC-4926-BCC9-43647C1AC3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using BroomDLL;
 using static System.Console;
 
 namespace BroomConsole
@@ -77,13 +77,10 @@ namespace BroomConsole
             ForegroundColor = ConsoleColor.Yellow;
             WriteLine();
             WriteLine("Выберите режим очистки:");
-            WriteLine("1. Очистить только кэши браузеров");
-            WriteLine("2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)");
-            WriteLine("3. Очитстить только папку Загрузки (Downloads)");
-            WriteLine("4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)");
-            WriteLine("5. Очитстить кэши браузеров и папку Загрузки (Downloads)");
-            WriteLine("6. Очитстить Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
-            WriteLine("7. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
+            WriteLine("1. Очистить кэши браузеров");
+            WriteLine("2. Очистить Корзину и временные файлы (RecycleBin & Temp)");
+            WriteLine("3. Очистить папку Загрузки (Downloads)");
+            WriteLine("4. Очистить всё");
             WriteLine("0. Выход");
             WriteLine();
             ResetColor();
@@ -119,6 +116,13 @@ namespace BroomConsole
             WriteLine(message);
             WriteLine("**********");
             WriteLine();
+            ResetColor();
+        }
+
+        public static void ExceptionMessage(string e)
+        {
+            ForegroundColor = ConsoleColor.Red;
+            WriteLine(e);
             ResetColor();
         }
     }
