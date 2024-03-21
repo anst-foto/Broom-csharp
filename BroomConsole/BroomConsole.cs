@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BroomDLL;
 using static System.Console;
@@ -78,52 +79,40 @@ namespace BroomConsole
             WriteLine();
             WriteLine("Выберите режим очистки:");
             WriteLine("1. Очистить кэши браузеров");
-            WriteLine("2. Очистить Корзину и временные файлы (RecycleBin & Temp)");
-            WriteLine("3. Очистить папку Загрузки (Downloads)");
-            WriteLine("4. Очистить всё");
+            WriteLine("2. Очистить Корзину (Trash)");
+            WriteLine("3. Очистить временные файлы (Temp)");
+            WriteLine("4. Очистить папку Загрузки (Downloads)");
+            WriteLine("5. Очистить всё");
             WriteLine("0. Выход");
             WriteLine();
             ResetColor();
         }
-        public static void InfoMessage(string message)
+        public static void WriteMessage(object sender, string message, ConsoleColor color)
         {
-            ForegroundColor = ConsoleColor.Yellow;
-            WriteLine();
-            WriteLine("----------");
-            WriteLine("Info");
+            var name = (InfoEvents)sender;
+            ForegroundColor = color;
+            Write("{0} : ", name);
             WriteLine(message);
-            WriteLine("----------");
-            WriteLine();
-            ResetColor();
-        }
-        public static void ErrorMessage(string message)
-        {
-            ForegroundColor = ConsoleColor.Red;
-            WriteLine();
-            WriteLine("!!!!!!!!!!");
-            WriteLine("ERROR");
-            WriteLine(message);
-            WriteLine("!!!!!!!!!!");
-            WriteLine();
-            ResetColor();
-        }
-        public static void SuccessfullyMessage(string message)
-        {
-            ForegroundColor = ConsoleColor.DarkGreen;
-            WriteLine();
-            WriteLine("**********");
-            WriteLine("Successfully");
-            WriteLine(message);
-            WriteLine("**********");
-            WriteLine();
             ResetColor();
         }
 
-        public static void ExceptionMessage(string e)
+        public static void InfoMessage(string message)
         {
-            ForegroundColor = ConsoleColor.Red;
-            WriteLine(e);
-            ResetColor();
+            WriteMessage(InfoEvents.Info, message, ConsoleColor.Blue);
+        }
+        public static void ErrorMessage(string message)
+        {
+             WriteMessage(InfoEvents.Error, message, ConsoleColor.Red);
+        }
+
+        public static void SuccessfullyMessage(string message)
+        {
+            WriteMessage(InfoEvents.Successfully, message, ConsoleColor.DarkGreen);
+        }
+
+        public static void ExceptionMessage(string message)
+        {
+            WriteMessage(InfoEvents.Exception, message, ConsoleColor.DarkRed);
         }
     }
 }

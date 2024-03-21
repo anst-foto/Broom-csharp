@@ -6,13 +6,12 @@ using BroomDLL.Browsers;
 
 namespace BroomDLL
 {
-    public static class CommonBrowsers
+    public class Browser : Item
     {
         public static event Message Error;
 
-        private static Dictionary<string, BrowserCleaner> browsers = new Dictionary<string, BrowserCleaner>()
+        private static Dictionary<string, Action<string>> browsers = new Dictionary<string, Action<string>>()
         {
-            {"Test", Test.Clear },
             {"Google Chrome", GoogleChrome.Clear},
             {"Chromium", Chromium.Clear},
             {"Yandex", Yandex.Clear},
@@ -23,13 +22,13 @@ namespace BroomDLL
             {"Opera", Opera.Clear},
         };
 
-        public static void CleanerBrowsers()
+        public override void Clear(string dir)
         {
             foreach (string browser in GetBrowsers())
             {
-                if (browsers.TryGetValue(browser, out BrowserCleaner bc))
+                if (browsers.TryGetValue(browser, out Action<string> bc))
                 {
-                    Broom.ClearItem(browser, browsers[browser]);
+                    Broom.ClearItem("Очистка кэша", browser, browsers[browser]);
                 }
                 else
                 {
@@ -50,5 +49,6 @@ namespace BroomDLL
                 yield return browserName;
             }
         }
+
     }
 }

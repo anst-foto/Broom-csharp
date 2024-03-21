@@ -13,7 +13,7 @@ namespace BroomConsole
             Broom.Info += BroomConsole.InfoMessage;
             Broom.Error += BroomConsole.ErrorMessage;
             Broom.Successfully += BroomConsole.SuccessfullyMessage;
-            CommonBrowsers.Error += BroomConsole.ErrorMessage;
+            Browser.Error += BroomConsole.ErrorMessage;
 
             Broom.Info += BroomLogFile.InfoMessage;
             Broom.Error += BroomLogFile.ErrorMessage;
@@ -24,19 +24,16 @@ namespace BroomConsole
             BroomConsole.PrintWelcome();
             BroomLogFile.LogFileStart();
             int choice = 0;
-            Action[] actions = new Action[5]
-            {
-                () => { },
-                () => CommonBrowsers.CleanerBrowsers(),
-                () => Broom.CleanerRecile(),
-                () => Broom.CleanerDownload(),
-                () => Broom.CleanerAll()
-            };
             do
             {
                 BroomConsole.PrintMenu();
                 choice = Convert.ToInt32(ReadLine());
-                actions[choice].Invoke();
+                if (choice < 5)
+                    Item.items[choice].Clear(Item.dir);
+                else if (choice == 5)
+                    Item.ClearAll();
+                else
+                    BroomConsole.ErrorMessage("неверный ввод");
                 BroomLogFile.LogFileEnd();
             } while (choice != 0);
             ReadKey();

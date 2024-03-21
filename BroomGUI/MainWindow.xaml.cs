@@ -18,7 +18,7 @@ namespace BroomGUI
             Broom.Info += InfoMessage;
             Broom.Error += ErrorMessage;
             Broom.Successfully += SuccessfullyMessage;
-            CommonBrowsers.Error += ErrorMessage;
+            Browser.Error += ErrorMessage;
 
             Broom.Info += BroomLogFile.InfoMessage;
             Broom.Error += BroomLogFile.ErrorMessage;
@@ -36,19 +36,19 @@ namespace BroomGUI
         {
             if (radioCleanerBrowser.IsChecked == true)
             {
-                CommonBrowsers.CleanerBrowsers();
+                new Browser().Clear(Item.dir);
             }
             else if (radioCleanerDownloads.IsChecked == true)
             {
-                Broom.CleanerDownload();
+                new Download().Clear(Item.dir);
             }
             else if (radioCleanerRecile.IsChecked == true)
             {
-                Broom.CleanerRecile();
+                new Trash().Clear(Item.dir);
             }
             else if (radioCleanerAll.IsChecked == true)
             {
-                Broom.CleanerAll();
+                Item.ClearAll();
             }
         }
 

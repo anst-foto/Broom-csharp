@@ -4,7 +4,6 @@ using System.IO;
 
 namespace BroomDLL
 {
-    public delegate void BrowserCleaner(string path);
     public delegate void Message(string message);
     public static class Broom
     {
@@ -84,63 +83,16 @@ namespace BroomDLL
         #endregion
 
         #region Clear 
-
-        private static void ClearTemp(string dir)
-        {
-            DeleteFoldersFiles($@"{dir}\AppData\Local\Temp");
-            DeleteFoldersFiles($@"{dir}\AppData\Local\Microsoft\Windows\AppCache");
-            DeleteFoldersFiles(@"C:\Windows\Temp");
-        }
-
-        private static void ClearRecileBin()
-        {
-            var drives = DriveInfo.GetDrives();
-            foreach (var drive in drives)
-            {
-                var RecyclePath = $@"{drive}$Recycle.Bin";
-                DeleteFoldersFiles(RecyclePath);
-            }
-        }
-
-        public static void ClearDownload(string dir)
-        {
-            DeleteFoldersFiles($@"{dir}\Downloads");
-        }
-
-        public static void ClearItem(string name, BrowserCleaner browser, string startMessage = "Очистка кэша")
+        public static void ClearItem(string startMessage, string name, Action<string> action)
         {
             if (!Directory.Exists(PathUsers)) return;
             var PathUser = Directory.GetDirectories(PathUsers);
             Info?.Invoke($"{startMessage} {name}...");
-
             foreach (var path in PathUser)
             {
-                browser(path);
+                action(path);
             }
             Successfully?.Invoke($"{startMessage} {name} завершена");
-        }
-
-        public static void CleanerRecile()
-        {
-            Info?.Invoke("Очистка ...");
-
-            ClearRecileBin();
-
-            Successfully?.Invoke("Очистка Корзины завершена");
-
-            ClearItem("временных файлов", ClearTemp, "Очистка");
-        }
-
-        public static void CleanerDownload()
-        {
-            ClearItem("папки Загрузка", ClearDownload, "Очистка");
-        }
-
-        public static void CleanerAll()
-        {
-            CommonBrowsers.CleanerBrowsers();
-            CleanerRecile();
-            CleanerDownload();
         }
         #endregion
     }
