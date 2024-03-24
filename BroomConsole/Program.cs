@@ -28,13 +28,14 @@ namespace BroomConsole
             {
                 BroomConsole.PrintMenu();
                 choice = Convert.ToInt32(ReadLine());
-                if (choice < 5)
-                    Item.items[choice].Clear(Item.dir);
+               if (choice == 0)
+                    BroomLogFile.LogFileEnd();
+                else if (choice < 5)
+                    Item.items[choice - 1].Clear(Item.dir);
                 else if (choice == 5)
                     Item.ClearAll();
                 else
                     BroomConsole.ErrorMessage("неверный ввод");
-                BroomLogFile.LogFileEnd();
             } while (choice != 0);
             ReadKey();
         }
