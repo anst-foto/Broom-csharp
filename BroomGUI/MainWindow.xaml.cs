@@ -18,45 +18,37 @@ namespace BroomGUI
             Broom.Info += InfoMessage;
             Broom.Error += ErrorMessage;
             Broom.Successfully += SuccessfullyMessage;
+            Browser.Error += ErrorMessage;
 
             Broom.Info += BroomLogFile.InfoMessage;
             Broom.Error += BroomLogFile.ErrorMessage;
             Broom.Successfully += BroomLogFile.SuccessfullyMessage;
+            BroomLogFile.WriteLogException += ExceptionMessage;
             #endregion
         }
-        
+
+        private static void ExceptionMessage(string message)
+        {
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
             if (radioCleanerBrowser.IsChecked == true)
             {
-                Broom.CleanerBrowser();
+                new Browser().Clear(Item.dir);
             }
             else if (radioCleanerDownloads.IsChecked == true)
             {
-                Broom.CleanerDownloads();
+                new Download().Clear(Item.dir);
             }
             else if (radioCleanerRecile.IsChecked == true)
             {
-                Broom.CleanerRecile();
-            }
-            else if (radioCleanerBrowserAndDownloads.IsChecked == true)
-            {
-                Broom.CleanerBrowser();
-                Broom.CleanerDownloads();
-            }
-            else if (radioCleanerBrowserAndRecile.IsChecked == true)
-            {
-                Broom.CleanerBrowser();
-                Broom.CleanerRecile();
-            }
-            else if (radioCleanerRecileAndDownloads.IsChecked == true)
-            {
-                Broom.CleanerRecile();
-                Broom.CleanerDownloads();
+                new Trash().Clear(Item.dir);
             }
             else if (radioCleanerAll.IsChecked == true)
             {
-                Broom.CleanerAll();
+                Item.ClearAll();
             }
         }
 
