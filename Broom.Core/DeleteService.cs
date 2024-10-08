@@ -37,7 +37,7 @@ public static class DeleteService
             Logger.Info($"Delete {file.FullName}");
         }
 
-        directory.Delete(recursive: true);//FIXME  ??? recursive ???
+        directory.Delete(true); //FIXME  ??? recursive ???
         Logger.Info($"Delete {directory.FullName}");
     }
 }
