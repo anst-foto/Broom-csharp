@@ -5,10 +5,16 @@ using NLog;
 
 namespace Broom.Core;
 
+/// <summary>
+/// Класс очистки
+/// </summary>
 public static class Cleaner
 {
     private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
+    /// <summary>
+    /// Очистка корзины
+    /// </summary>
     [Obsolete("Этот метод нельзя использовать")]
     public static void CleaningRecycleBin() //FIXME
     {
@@ -32,6 +38,9 @@ public static class Cleaner
     [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
     private static extern int SHEmptyRecycleBin(IntPtr hwnd, string pszRootPath, RecycleFlags dwFlags);
 
+    /// <summary>
+    /// Очистка корзины через WinApi
+    /// </summary>
     public static void CleaningRecycleBinWinApi()
     {
         var result = SHEmptyRecycleBin(IntPtr.Zero, null,
@@ -46,6 +55,9 @@ public static class Cleaner
         }
     }
 
+    /// <summary>
+    /// Очистка временных файлов
+    /// </summary>
     public static void CleaningTemp()
     {
 

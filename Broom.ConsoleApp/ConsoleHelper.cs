@@ -2,8 +2,14 @@
 
 namespace Broom.ConsoleApp;
 
+/// <summary>
+/// Класс для вывода информации в консоль
+/// </summary>
 public static class ConsoleHelper
 {
+    /// <summary>
+    /// Вывод приветствия в консоль
+    /// </summary>
     public static void PrintWelcome()
     {
         Title = "Broom (Метла)";
@@ -43,6 +49,9 @@ public static class ConsoleHelper
         ResetColor();
     }
 
+    /// <summary>
+    /// Вывод лицензии в консоль
+    /// </summary>
     public static void PrintLicense()
     {
         ForegroundColor = ConsoleColor.DarkGray;
@@ -64,6 +73,9 @@ public static class ConsoleHelper
         ResetColor();
     }
 
+    /// <summary>
+    /// Вывод меню в консоль
+    /// </summary>
     public static void PrintMenu()
     {
         ForegroundColor = ConsoleColor.Yellow;
@@ -83,6 +95,10 @@ public static class ConsoleHelper
         ResetColor();
     }
 
+    /// <summary>
+    /// Вывод информационного сообщения в консоль
+    /// </summary>
+    /// <param name="message">Текст сообщения</param>
     public static void InfoMessage(string message)
     {
         ForegroundColor = ConsoleColor.Yellow;
@@ -96,6 +112,10 @@ public static class ConsoleHelper
         ResetColor();
     }
 
+    /// <summary>
+    /// Вывод сообщения об ошибке в консоль
+    /// </summary>
+    /// <param name="message">Текст сообщения</param>
     public static void ErrorMessage(string message)
     {
         ForegroundColor = ConsoleColor.Red;
@@ -109,6 +129,10 @@ public static class ConsoleHelper
         ResetColor();
     }
 
+    /// <summary>
+    /// Вывод сообщения об успешном завершении в консоль
+    /// </summary>
+    /// <param name="message">Текст сообщения</param>
     public static void SuccessfullyMessage(string message)
     {
         ForegroundColor = ConsoleColor.DarkGreen;

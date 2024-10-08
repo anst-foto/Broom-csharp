@@ -3,10 +3,17 @@ using NLog;
 
 namespace Broom.Core;
 
+/// <summary>
+/// Класс для удаления файлов и папок
+/// </summary>
 public static class DeleteService
 {
     private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
+    /// <summary>
+    /// Удаление атрибута ReadOnly из файлов директории
+    /// </summary>
+    /// <param name="path">Путь к директории</param>
     public static void RemovingReadOnlyAttributeFromFiles(string path)
     {
         if (!Directory.Exists(path))
@@ -27,6 +34,10 @@ public static class DeleteService
         }
     }
 
+    /// <summary>
+    /// Удаление файлов и директории
+    /// </summary>
+    /// <param name="path">Путь к директории</param>
     public static void DeleteFiles(string path)
     {
         var directory = new DirectoryInfo(path);
