@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Broom.Core", "Broom.Core\Broom.Core.csproj", "{AC814E9E-E84D-46C1-A27B-DAE27040D510}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broom.ConsoleApp", "Broom.ConsoleApp\Broom.ConsoleApp.csproj", "{35A7A44F-E250-46DD-8FDF-AF69742BA05B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broom.Core.Test", "Broom.Core.Test\Broom.Core.Test.csproj", "{58682726-1CC7-4B72-B68C-087BE45A60E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AC814E9E-E84D-46C1-A27B-DAE27040D510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC814E9E-E84D-46C1-A27B-DAE27040D510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC814E9E-E84D-46C1-A27B-DAE27040D510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58682726-1CC7-4B72-B68C-087BE45A60E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58682726-1CC7-4B72-B68C-087BE45A60E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58682726-1CC7-4B72-B68C-087BE45A60E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58682726-1CC7-4B72-B68C-087BE45A60E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
