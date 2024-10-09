@@ -8,7 +8,15 @@ namespace Broom.Core;
 /// </summary>
 public class Cleaner
 {
+    /// <summary>
+    /// Набор действий для очистки
+    /// </summary>
     private readonly IList<Action> _actions = new List<Action>();
+
+    /// <summary>
+    /// Список ошибок
+    /// </summary>
+    public readonly IList<Exception> Errors = new List<Exception>();
 
     /// <summary>
     /// Добавляет действие в очередь
@@ -24,11 +32,18 @@ public class Cleaner
     /// <summary>
     /// Выполняет все действия в очереди
     /// </summary>
-    public void Clean() //TODO Добавить агрегацию ошибок
+    public void Clean()
     {
         foreach (var action in _actions)
         {
-            action();
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                Errors.Add(e);
+            }
         }
     }
 }

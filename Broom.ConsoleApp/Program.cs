@@ -1,9 +1,13 @@
 ﻿using Broom.ConsoleApp.ConsoleHelper;
 using Broom.Core;
+using NLog;
 
 ConsoleHelper.PrintWelcome();
 
-var cleaner = new Cleaner();
+Cleaning.Logger = LogManager.GetLogger(nameof(Cleaning)); //FIXME
+DeleteService.Logger = LogManager.GetLogger(nameof(DeleteService)); //FIXME
+
+var cleaner = new Cleaner(); //TODO
 
 bool @continue;
 do
@@ -27,9 +31,6 @@ do
             cleaner.Add(Cleaning.Temp);
             break;
 
-        case "0": // 0. Выход
-            break;
-
         default:
             Console.WriteLine("Неверный режим работы");
             break;
@@ -40,17 +41,18 @@ do
     @continue = input is "д" or "Д";
 } while (@continue);
 
-if (!@continue)
+cleaner.Clean();
+if (cleaner.Errors.Count == 0)
 {
-    ConsoleHelper.InfoMessage("Выход...");
-    return;
+    ConsoleHelper.SuccessfullyMessage("Очистка завершена успешно");
+}
+else
+{
+    ConsoleHelper.ErrorMessage("Ошибки при очистке");
+    foreach (var error in cleaner.Errors)
+    {
+        ConsoleHelper.ErrorMessage(error.Message);
+    }
 }
 
-try
-{
-    cleaner.Clean();
-}
-catch (Exception e)
-{
-    ConsoleHelper.ErrorMessage(e.Message);
-}
+ConsoleHelper.InfoMessage("Выход...");
