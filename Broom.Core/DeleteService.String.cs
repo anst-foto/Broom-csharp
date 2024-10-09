@@ -116,7 +116,7 @@ public static partial class DeleteService
         }
         catch (Exception e)
         {
-            Logger?.Error($"Ошибка удаления файла {path}", e);
+            Logger?.Error(e, $"Ошибка удаления файла {path}");
             throw new DeleteException(path, e);
         }
     }

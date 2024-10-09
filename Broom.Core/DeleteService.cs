@@ -98,7 +98,7 @@ public static partial class DeleteService
         }
         catch (Exception e)
         {
-            Logger?.Error($"Delete file {file.FullName} error", e);
+            Logger?.Error(e,$"Delete file {file.FullName} error");
             throw new DeleteException(file.FullName, e);
         }
     }

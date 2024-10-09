@@ -16,12 +16,13 @@ public static class Cleaning
     /// </summary>
     public static ILogger? Logger { get; set; }
 
-    private enum RecycleFlags : int
+    private enum RecycleFlags
     {
         SHERB_NOCONFIRMATION = 0x00000001,
         SHERB_NOPROGRESSUI = 0x00000002,
         SHERB_NOSOUND = 0x00000004
     }
+
     [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
     private static extern int SHEmptyRecycleBin(IntPtr hwnd, string pszRootPath, RecycleFlags dwFlags);
 
@@ -54,7 +55,7 @@ public static class Cleaning
         }
         catch (Exception e)
         {
-            Logger?.Error($"Ошибка при очистке временных файлов", e);
+            Logger?.Error(e, "Ошибка при очистке временных файлов");
             throw new CleaningTempException();
         }
     }
