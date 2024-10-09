@@ -12,6 +12,9 @@ namespace Broom.Core;
 public static partial class DeleteService
 {
 
+    /// <summary>
+    /// Логгер
+    /// </summary>
     public static ILogger? Logger { get; set; }
 
     /// <summary>
