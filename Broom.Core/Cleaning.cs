@@ -9,26 +9,12 @@ namespace Broom.Core;
 /// <summary>
 /// Класс очистки
 /// </summary>
-public static class Cleaner
+public static class Cleaning
 {
-    public static ILogger? Logger { get; set; }
-
     /// <summary>
-    /// Очистка корзины
+    /// Логгер
     /// </summary>
-    [Obsolete("Этот метод нельзя использовать")]
-    public static void CleaningRecycleBin() //FIXME
-    {
-        var drives = DriveInfo.GetDrives();
-        foreach (var drive in drives)
-        {
-            var recyclePath = Path.Combine(drive.RootDirectory.FullName,"$Recycle.Bin");
-
-            DeleteService.DeleteDirectoryAndFiles(recyclePath);
-            Logger?.Info($"Deleted {recyclePath}");
-        }
-    }
-
+    public static ILogger? Logger { get; set; }
 
     private enum RecycleFlags : int
     {
@@ -42,7 +28,7 @@ public static class Cleaner
     /// <summary>
     /// Очистка корзины через WinApi
     /// </summary>
-    public static void CleaningRecycleBinWinApi()
+    public static void RecycleBinWinApi()
     {
         var result = SHEmptyRecycleBin(IntPtr.Zero, "",
             RecycleFlags.SHERB_NOCONFIRMATION + (int)RecycleFlags.SHERB_NOPROGRESSUI + (int)RecycleFlags.SHERB_NOSOUND);
@@ -60,8 +46,24 @@ public static class Cleaner
     /// <summary>
     /// Очистка временных файлов
     /// </summary>
-    public static void CleaningTemp()
+    public static void Temp()
     {
+        try
+        {
+            DeleteService.DeleteDirectoryAndFiles(Path.GetTempPath());
+        }
+        catch (Exception e)
+        {
+            Logger?.Error($"Ошибка при очистке временных файлов", e);
+            throw new CleaningTempException();
+        }
+    }
 
+    /// <summary>
+    /// Очистка загрузок
+    /// </summary>
+    public static void Downloads()
+    {
+        throw new NotImplementedException();
     }
 }
