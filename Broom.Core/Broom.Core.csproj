@@ -3,19 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    
     <AssemblyVersion>0.1</AssemblyVersion>
     <NeutralLanguage>ru-RU</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.3.4"/>
-    <PackageReference Include="NLog.Schema" Version="5.3.4"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
