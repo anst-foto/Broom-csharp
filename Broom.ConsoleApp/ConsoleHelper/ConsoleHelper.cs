@@ -82,14 +82,9 @@ public static partial class ConsoleHelper
         WriteLine();
         WriteLine("Выберите режим очистки:");
         WriteLine("1. Очистить только кэши браузеров");
-        WriteLine("2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)");
-        WriteLine("3. Очитстить только папку Загрузки (Downloads)");
-        WriteLine("4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)");
-        WriteLine("5. Очитстить кэши браузеров и папку Загрузки (Downloads)");
-        WriteLine("6. Очитстить Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
-        WriteLine(
-            "7. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)");
-        WriteLine("0. Выход");
+        WriteLine("2. Очистить только Корзину (RecycleBin)");
+        WriteLine("3. Очистить только папку Загрузки (Downloads)");
+        WriteLine("4. Очистить только временные файлы (Temp)");
         WriteLine();
 
         ResetColor();
