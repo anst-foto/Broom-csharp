@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using Broom.Core.Exceptions;
 using NLog;
 
 namespace Broom.Core;
@@ -6,49 +8,95 @@ namespace Broom.Core;
 /// <summary>
 /// Класс для удаления файлов и папок
 /// </summary>
-public static class DeleteService
+/// <remarks>Работа с файлами и папками через FileInfo и DirectoryInfo</remarks>
+public static partial class DeleteService
 {
-    private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
+    public static ILogger? Logger { get; set; }
 
     /// <summary>
-    /// Удаление атрибута ReadOnly из файлов директории
+    /// Проверка на существование директории
     /// </summary>
-    /// <param name="path">Путь к директории</param>
-    public static void RemovingReadOnlyAttributeFromFiles(string path)
+    /// <param name="directory">Директория</param>
+    /// <exception cref="NotFoundException">Исключение, если директория не существует</exception>
+    private static void ThrowIfNotFoundDirectory(DirectoryInfo directory)
     {
-        if (!Directory.Exists(path))
-        {
-            Logger.Error($"Directory {path} does not exist");
-            return;
-        }
+        if (directory.Exists) return;
 
-        var directory = new DirectoryInfo(path);
-        directory.Attributes &= ~FileAttributes.ReadOnly;
-        Logger.Info($"Set {directory.FullName} attributes to normal");
-
-        var files = directory.GetFiles();
-        foreach (var file in files)
-        {
-            file.Attributes = FileAttributes.Normal;
-            Logger.Info($"Set {file.FullName} attributes to normal");
-        }
+        Logger?.Error($"Директория ({directory.FullName}) не существует");
+        throw new NotFoundException(directory.FullName);
     }
 
     /// <summary>
-    /// Удаление файлов и директории
+    /// Проверка на существование файла
     /// </summary>
-    /// <param name="path">Путь к директории</param>
-    public static void DeleteFiles(string path)
+    /// <param name="file">Файл</param>
+    /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
+    private static void ThrowIfNotFoundFile(FileInfo file)
     {
-        var directory = new DirectoryInfo(path);
-        var files = directory.GetFiles();
-        foreach (var file in files)
+        if (file.Exists) return;
+
+        Logger?.Error($"Файл ({file.FullName}) не существует");
+        throw new NotFoundException(file.FullName);
+    }
+
+    /// <summary>
+    /// Удаление атрибута ReadOnly у директории
+    /// </summary>
+    /// <param name="directory">Директория</param>
+    /// <exception cref="NotFoundException">Исключение, если директория не существует</exception>
+    /// <exception cref="ReadOnlyAttributeException">Исключение, если у директории не удалось удалить атрибут ReadOnly</exception>
+    public static void RemovingReadOnlyAttributeDirectory(DirectoryInfo directory)
+    {
+        ThrowIfNotFoundDirectory(directory);
+
+        directory.Attributes &= ~FileAttributes.ReadOnly;
+        if (directory.Attributes != FileAttributes.Normal)
         {
-            file.Delete();
-            Logger.Info($"Delete {file.FullName}");
+            Logger?.Error($"Directory {directory.FullName} attributes are not normal");
+            throw new ReadOnlyAttributeException(directory.FullName);
+        }
+        Logger?.Info($"Set {directory.FullName} attributes to normal");
+    }
+
+    /// <summary>
+    /// Удаление атрибута ReadOnly у файла
+    /// </summary>
+    /// <param name="file">Файл</param>
+    /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
+    /// <exception cref="ReadOnlyAttributeException">Исключение, если у файла не удалось удалить атрибут ReadOnly</exception>
+    public static void RemovingReadOnlyAttributeFile(FileInfo file)
+    {
+        ThrowIfNotFoundFile(file);
+
+        file.Attributes = FileAttributes.Normal;
+        if (file.Attributes != FileAttributes.Normal)
+        {
+            Logger?.Error($"File {file.FullName} attributes are not normal");
+            throw new ReadOnlyAttributeException(file.FullName);
         }
 
-        directory.Delete(true); //FIXME  ??? recursive ???
-        Logger.Info($"Delete {directory.FullName}");
+        Logger?.Info($"Set {file.FullName} attributes to normal");
+    }
+
+    /// <summary>
+    /// Удаление файла
+    /// </summary>
+    /// <param name="file">Файл</param>
+    /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
+    /// <exception cref="DeleteException">Исключение, если не удалось удалить файл</exception>
+    public static void DeleteFile(FileInfo file)
+    {
+        ThrowIfNotFoundFile(file);
+
+        try
+        {
+            file.Delete();
+        }
+        catch (Exception e)
+        {
+            Logger?.Error($"Delete file {file.FullName} error", e);
+            throw new DeleteException(file.FullName, e);
+        }
     }
 }
