@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Broom.Core.Exceptions;
 using NLog;
 
 namespace Broom.Core;
@@ -10,7 +11,7 @@ namespace Broom.Core;
 /// </summary>
 public static class Cleaner
 {
-    private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+    public static ILogger? Logger { get; set; }
 
     /// <summary>
     /// Очистка корзины
@@ -23,8 +24,8 @@ public static class Cleaner
         {
             var recyclePath = Path.Combine(drive.RootDirectory.FullName,"$Recycle.Bin");
 
-            DeleteService.DeleteFiles(recyclePath);
-            Logger.Info($"Deleted {recyclePath}");
+            DeleteService.DeleteDirectoryAndFiles(recyclePath);
+            Logger?.Info($"Deleted {recyclePath}");
         }
     }
 
@@ -43,15 +44,16 @@ public static class Cleaner
     /// </summary>
     public static void CleaningRecycleBinWinApi()
     {
-        var result = SHEmptyRecycleBin(IntPtr.Zero, null,
+        var result = SHEmptyRecycleBin(IntPtr.Zero, "",
             RecycleFlags.SHERB_NOCONFIRMATION + (int)RecycleFlags.SHERB_NOPROGRESSUI + (int)RecycleFlags.SHERB_NOSOUND);
         if (result == 0)
         {
-            Logger.Info("Recycle bin is empty");
+            Logger?.Info("Корзина очищена");
         }
         else
         {
-            Logger.Error("Recycle bin is not empty");
+            Logger?.Error("Ошибка при очистке корзины");
+            throw new CleaningRecycleBinException();
         }
     }
 
