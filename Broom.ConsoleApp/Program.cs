@@ -1,47 +1,56 @@
-﻿using Broom.ConsoleApp;
+﻿using Broom.ConsoleApp.ConsoleHelper;
 using Broom.Core;
 
 ConsoleHelper.PrintWelcome();
-ConsoleHelper.PrintMenu();
 
-var select = Console.ReadLine();
+var cleaner = new Cleaner();
 
-switch (select)
+bool @continue;
+do
 {
-    case "1": // 1. Очистить только кэши браузеров
+    ConsoleHelper.PrintMenu();
+    var select = Console.ReadLine();
+    switch (select)
+    {
+        case "1": // 1. Очистить только кэши браузеров
 
-        break;
-    case "2": // 2. Очитстить только Корзину и временные файлы (RecycleBin & Temp)
-        Cleaner.CleaningRecycleBinWinApi();
-        Cleaner.CleaningTemp();
-        break;
+            break;
+        case "2": // 2. Очистить только Корзину (RecycleBin)
+            cleaner.Add(Cleaning.RecycleBinWinApi);
+            break;
 
-    case "3": // 3. Очитстить только папку Загрузки (Downloads)
+        case "3": // 3. Очистить только папку Загрузки (Downloads)
+            cleaner.Add(Cleaning.Downloads);
+            break;
 
-        break;
+        case "4": // 4. Очистить только временные файлы (Temp)
+            cleaner.Add(Cleaning.Temp);
+            break;
 
-    case "4": // 4. Очитстить кэши браузеров и Корзину с временными файлами (RecycleBin & Temp)
+        case "0": // 0. Выход
+            break;
 
-        break;
+        default:
+            Console.WriteLine("Неверный режим работы");
+            break;
+    }
 
-    case "5": // 5. Очитстить кэши браузеров и папку Загрузки (Downloads)
+    Console.Write("Хотите продолжить? (д/Д - да, продолжить): ");
+    var input = Console.ReadLine();
+    @continue = input is "д" or "Д";
+} while (@continue);
 
-        break;
-
-    case "6": // 6. Очитстить Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)
-
-        break;
-
-    case "7": // 7. Очитстить кэши браузеров, Корзину с временными файлами (RecycleBin & Temp) и папку Загрузки (Downloads)
-
-        break;
-
-    case "0": // 0. Выход
-        break;
-
-    default:
-        Console.WriteLine("Неверный режим работы");
-        break;
+if (!@continue)
+{
+    ConsoleHelper.InfoMessage("Выход...");
+    return;
 }
 
-Console.ReadLine();
+try
+{
+    cleaner.Clean();
+}
+catch (Exception e)
+{
+    ConsoleHelper.ErrorMessage(e.Message);
+}
