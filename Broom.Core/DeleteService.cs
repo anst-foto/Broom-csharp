@@ -6,19 +6,18 @@ using NLog;
 namespace Broom.Core;
 
 /// <summary>
-/// Класс для удаления файлов и папок
+///     Класс для удаления файлов и папок
 /// </summary>
 /// <remarks>Работа с файлами и папками через FileInfo и DirectoryInfo</remarks>
 public static partial class DeleteService
 {
-
     /// <summary>
-    /// Логгер
+    ///     Логгер
     /// </summary>
     public static ILogger? Logger { get; set; }
 
     /// <summary>
-    /// Проверка на существование директории
+    ///     Проверка на существование директории
     /// </summary>
     /// <param name="directory">Директория</param>
     /// <exception cref="NotFoundException">Исключение, если директория не существует</exception>
@@ -31,7 +30,7 @@ public static partial class DeleteService
     }
 
     /// <summary>
-    /// Проверка на существование файла
+    ///     Проверка на существование файла
     /// </summary>
     /// <param name="file">Файл</param>
     /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
@@ -44,7 +43,7 @@ public static partial class DeleteService
     }
 
     /// <summary>
-    /// Удаление атрибута ReadOnly у директории
+    ///     Удаление атрибута ReadOnly у директории
     /// </summary>
     /// <param name="directory">Директория</param>
     /// <exception cref="NotFoundException">Исключение, если директория не существует</exception>
@@ -59,11 +58,12 @@ public static partial class DeleteService
             Logger?.Error($"Directory {directory.FullName} attributes are not normal");
             throw new ReadOnlyAttributeException(directory.FullName);
         }
+
         Logger?.Info($"Set {directory.FullName} attributes to normal");
     }
 
     /// <summary>
-    /// Удаление атрибута ReadOnly у файла
+    ///     Удаление атрибута ReadOnly у файла
     /// </summary>
     /// <param name="file">Файл</param>
     /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
@@ -83,7 +83,7 @@ public static partial class DeleteService
     }
 
     /// <summary>
-    /// Удаление файла
+    ///     Удаление файла
     /// </summary>
     /// <param name="file">Файл</param>
     /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
@@ -98,7 +98,7 @@ public static partial class DeleteService
         }
         catch (Exception e)
         {
-            Logger?.Error(e,$"Delete file {file.FullName} error");
+            Logger?.Error(e, $"Delete file {file.FullName} error");
             throw new DeleteException(file.FullName, e);
         }
     }

@@ -5,7 +5,7 @@ namespace Broom.ConsoleApp.ConsoleHelper;
 public static partial class ConsoleHelper
 {
     /// <summary>
-    /// Вывод информационного сообщения в консоль
+    ///     Вывод информационного сообщения в консоль
     /// </summary>
     /// <param name="message">Текст сообщения</param>
     public static void InfoMessage(string message)
@@ -22,7 +22,7 @@ public static partial class ConsoleHelper
     }
 
     /// <summary>
-    /// Вывод сообщения об ошибке в консоль
+    ///     Вывод сообщения об ошибке в консоль
     /// </summary>
     /// <param name="message">Текст сообщения</param>
     public static void ErrorMessage(string message)
@@ -39,7 +39,7 @@ public static partial class ConsoleHelper
     }
 
     /// <summary>
-    /// Вывод сообщения об успешном завершении в консоль
+    ///     Вывод сообщения об успешном завершении в консоль
     /// </summary>
     /// <param name="message">Текст сообщения</param>
     public static void SuccessfullyMessage(string message)

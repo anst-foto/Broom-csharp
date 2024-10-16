@@ -3,12 +3,12 @@
 namespace Broom.ConsoleApp.ConsoleHelper;
 
 /// <summary>
-/// Класс для вывода информации в консоль
+///     Класс для вывода информации в консоль
 /// </summary>
 public static partial class ConsoleHelper
 {
     /// <summary>
-    /// Вывод приветствия в консоль
+    ///     Вывод приветствия в консоль
     /// </summary>
     public static void PrintWelcome()
     {
@@ -50,7 +50,7 @@ public static partial class ConsoleHelper
     }
 
     /// <summary>
-    /// Вывод лицензии в консоль
+    ///     Вывод лицензии в консоль
     /// </summary>
     public static void PrintLicense()
     {
@@ -74,7 +74,7 @@ public static partial class ConsoleHelper
     }
 
     /// <summary>
-    /// Вывод меню в консоль
+    ///     Вывод меню в консоль
     /// </summary>
     public static void PrintMenu()
     {

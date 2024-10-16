@@ -5,13 +5,13 @@ using Broom.Core.Exceptions;
 namespace Broom.Core;
 
 /// <summary>
-/// Класс для удаления файлов и папок
+///     Класс для удаления файлов и папок
 /// </summary>
 /// <remarks>Работа с файлами и папками через путь к файлу/директории</remarks>
 public static partial class DeleteService
 {
     /// <summary>
-    /// Проверка на существование директории
+    ///     Проверка на существование директории
     /// </summary>
     /// <param name="path">Путь к директории</param>
     /// <exception cref="NotFoundException">Исключение, если директория не существует</exception>
@@ -24,7 +24,7 @@ public static partial class DeleteService
     }
 
     /// <summary>
-    /// Проверка на существование файла
+    ///     Проверка на существование файла
     /// </summary>
     /// <param name="path">Путь к файлу</param>
     /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
@@ -37,7 +37,7 @@ public static partial class DeleteService
     }
 
     /// <summary>
-    /// Удаление атрибута ReadOnly у директории
+    ///     Удаление атрибута ReadOnly у директории
     /// </summary>
     /// <param name="path">Путь к директории</param>
     /// <exception cref="NotFoundException">Исключение, если директория не существует</exception>
@@ -53,11 +53,12 @@ public static partial class DeleteService
             Logger?.Error($"Directory {directory.FullName} attributes are not normal");
             throw new ReadOnlyAttributeException(path);
         }
+
         Logger?.Info($"Set {directory.FullName} attributes to normal");
     }
 
     /// <summary>
-    /// Удаление атрибута ReadOnly у файла
+    ///     Удаление атрибута ReadOnly у файла
     /// </summary>
     /// <param name="path">Путь к файлу</param>
     /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>
@@ -81,7 +82,7 @@ public static partial class DeleteService
     }
 
     /// <summary>
-    /// Удаление файлов и директории
+    ///     Удаление файлов и директории
     /// </summary>
     /// <param name="path">Путь к директории</param>
     public static void DeleteDirectoryAndFiles(string path)
@@ -90,17 +91,14 @@ public static partial class DeleteService
 
         var directory = new DirectoryInfo(path);
         var files = directory.GetFiles();
-        foreach (var file in files)
-        {
-            DeleteFile(file);
-        }
+        foreach (var file in files) DeleteFile(file);
 
         directory.Delete(true); //FIXME  ??? recursive ???
         Logger?.Info($"Директория {directory.FullName} удалена");
     }
 
     /// <summary>
-    /// Удаление файла
+    ///     Удаление файла
     /// </summary>
     /// <param name="path">Путь к файлу</param>
     /// <exception cref="NotFoundException">Исключение, если файл не существует</exception>

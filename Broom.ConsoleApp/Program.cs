@@ -49,10 +49,7 @@ if (cleaner.Errors.Count == 0)
 else
 {
     ConsoleHelper.ErrorMessage("Ошибки при очистке");
-    foreach (var error in cleaner.Errors)
-    {
-        ConsoleHelper.ErrorMessage(error.Message);
-    }
+    foreach (var error in cleaner.Errors) ConsoleHelper.ErrorMessage(error.Message);
 }
 
 ConsoleHelper.InfoMessage("Выход...");

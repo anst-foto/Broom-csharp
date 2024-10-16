@@ -4,22 +4,22 @@ using System.Collections.Generic;
 namespace Broom.Core;
 
 /// <summary>
-/// Класс для очистки. Выполняет все операции, которые были добавлены в список.
+///     Класс для очистки. Выполняет все операции, которые были добавлены в список.
 /// </summary>
 public class Cleaner
 {
     /// <summary>
-    /// Набор действий для очистки
+    ///     Набор действий для очистки
     /// </summary>
     private readonly IList<Action> _actions = new List<Action>();
 
     /// <summary>
-    /// Список ошибок
+    ///     Список ошибок
     /// </summary>
     public readonly IList<Exception> Errors = new List<Exception>();
 
     /// <summary>
-    /// Добавляет действие в очередь
+    ///     Добавляет действие в очередь
     /// </summary>
     /// <param name="action">Операция по очистке</param>
     /// <returns>Ссылка на самого себя</returns>
@@ -30,12 +30,11 @@ public class Cleaner
     }
 
     /// <summary>
-    /// Выполняет все действия в очереди
+    ///     Выполняет все действия в очереди
     /// </summary>
     public void Clean()
     {
         foreach (var action in _actions)
-        {
             try
             {
                 action();
@@ -44,6 +43,5 @@ public class Cleaner
             {
                 Errors.Add(e);
             }
-        }
     }
 }

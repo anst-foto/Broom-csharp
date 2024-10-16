@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Broom.Core\Broom.Core.csproj"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="nlog.config" CopyToOutputDirectory="Always"/>
   </ItemGroup>

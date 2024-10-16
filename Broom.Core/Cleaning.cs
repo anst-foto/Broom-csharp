@@ -7,27 +7,20 @@ using NLog;
 namespace Broom.Core;
 
 /// <summary>
-/// Класс очистки
+///     Класс очистки
 /// </summary>
 public static class Cleaning
 {
     /// <summary>
-    /// Логгер
+    ///     Логгер
     /// </summary>
     public static ILogger? Logger { get; set; }
-
-    private enum RecycleFlags
-    {
-        SHERB_NOCONFIRMATION = 0x00000001,
-        SHERB_NOPROGRESSUI = 0x00000002,
-        SHERB_NOSOUND = 0x00000004
-    }
 
     [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
     private static extern int SHEmptyRecycleBin(IntPtr hwnd, string pszRootPath, RecycleFlags dwFlags);
 
     /// <summary>
-    /// Очистка корзины через WinApi
+    ///     Очистка корзины через WinApi
     /// </summary>
     public static void RecycleBinWinApi()
     {
@@ -45,7 +38,7 @@ public static class Cleaning
     }
 
     /// <summary>
-    /// Очистка временных файлов
+    ///     Очистка временных файлов
     /// </summary>
     public static void Temp()
     {
@@ -61,10 +54,17 @@ public static class Cleaning
     }
 
     /// <summary>
-    /// Очистка загрузок
+    ///     Очистка загрузок
     /// </summary>
     public static void Downloads()
     {
         throw new NotImplementedException();
+    }
+
+    private enum RecycleFlags
+    {
+        SHERB_NOCONFIRMATION = 0x00000001,
+        SHERB_NOPROGRESSUI = 0x00000002,
+        SHERB_NOSOUND = 0x00000004
     }
 }
