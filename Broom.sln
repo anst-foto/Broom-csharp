@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Broom.Core", "Broom.Core\Br
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broom.ConsoleApp", "Broom.ConsoleApp\Broom.ConsoleApp.csproj", "{35A7A44F-E250-46DD-8FDF-AF69742BA05B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broom.TUI", "Broom.TUI\Broom.TUI.csproj", "{FE109013-8CDF-4E89-B590-4EB02D737097}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35A7A44F-E250-46DD-8FDF-AF69742BA05B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE109013-8CDF-4E89-B590-4EB02D737097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE109013-8CDF-4E89-B590-4EB02D737097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE109013-8CDF-4E89-B590-4EB02D737097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE109013-8CDF-4E89-B590-4EB02D737097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
